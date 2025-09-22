@@ -1,6 +1,6 @@
 
 const myVisualImages = ['gen1.jpg', 'gen2.jpg', 'gen3.jpg', 'gen4.jpg', 'gen5.jpg'];
-const myAiVideos = ['videos/explainer1.mp4', 'videos/explainer2.mp4', 'videos/explainer3.mp4', 'videos/explainer4.mp4'];
+const myAiVideos = ['explainer1.mp4', 'explainer2.mp4', 'explainer3.mp4', 'explainer4.mp4'];
 let map, communityMap, drawnItems, drawControl, chart, pollutionChart, lastCalc, communityData = [],
     locationDetected = false,
     currentLanguage = 'en',
@@ -2636,3 +2636,4 @@ function changeLanguage(lang) {
         generateAI();
     }
 }
+
