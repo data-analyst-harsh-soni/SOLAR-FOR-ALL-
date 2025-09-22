@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLAR FOR ALL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-container" class="login-container">
+        <div class="login-box">
+            <div class="login-logo-section">
+                <img src="logo2.png" alt="Logo" class="login-main-logo">
+                <h1 class="login-main-text" data-lang-key="app_title">SOLAR FOR ALL</h1>
+            </div>
+            <p data-lang-key="login_welcome">Welcome! Please log in to continue.</p>
+            <input type="text" id="username" data-lang-key="login_username_placeholder" placeholder="Enter Username" autocomplete="username">
+            <input type="password" id="password" data-lang-key="login_password_placeholder" placeholder="Enter Password" autocomplete="current-password">
+            <button class="btn" onclick="handleLogin()" data-lang-key="login_btn">Login</button>
+        </div>
+    </div>
+
+    <div id="main-app">
+        <header class="header">
+            <div class="logo">
+                <img src="logo2.png" alt="Logo" class="header-logo-icon">
+                <span data-lang-key="app_title">SOLAR FOR ALL</span>
+            </div>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a class="nav-link" data-target="#home" data-lang-key="nav_home">Home</a></li>
+                <li><a class="nav-link" data-target="#dashboard" data-lang-key="nav_dashboard">Mission Control</a></li>
+                <li><a class="nav-link" data-target="#calculator" data-lang-key="nav_calculator">Calculator</a></li>
+                <li><a class="nav-link" data-target="#chatbot" data-lang-key="nav_chatbot">AI Chatbot</a></li>
+                <li><a class="nav-link" data-target="#ai-explainer" data-lang-key="nav_ai_explainer">Solar Analysis</a></li>
+                <li><a class="nav-link" data-target="#ai-visual" data-lang-key="nav_ai_visual">Your Solar Vision</a></li>
+                <li><a class="nav-link" data-target="#ai-video" data-lang-key="nav_ai_video">Installation Preview</a></li>
+                <li><a class="nav-link" data-target="#help" data-lang-key="nav_help">Help</a></li>
+                <li><a class="nav-link" data-target="#contact" data-lang-key="nav_contact">Contact</a></li>
+                <li>
+                    <div class="language-switcher">
+                        <select id="langSelect">
+                            <option value="en">English</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+        </header>
+
+        <main style="width:100%">
+            <section id="home" class="page-section active">
+                <div class="container">
+                    <div class="home-hero">
+                        <div class="hero-title-container">
+                            <img src="logo2.png" alt="Logo" class="hero-logo-icon">
+                            <h1 data-lang-key="home_title">Light up Your Future with Solar Energy!</h1>
+                        </div>
+                        <p data-lang-key="home_subtitle">Reduce your electricity bills, protect the environment, and move towards a self-reliant energy future. Our 'SOLAR FOR ALL' calculator and AI will guide you every step of the way.</p>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 3h.008v.008H8.25v-.008Zm0 3h.008v.008H8.25v-.008Zm3-6h.008v.008H11.25v-.008Zm0 3h.008v.008H11.25v-.008Zm0 3h.008v.008H11.25v-.008Zm3-6h.008v.008H14.25v-.008Zm0 3h.008v.008H14.25v-.008Zm0 3h.008v.008H14.25v-.008ZM6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>
+                                <h3 data-lang-key="home_card1_title">Instant Calculation</h3>
+                                <p data-lang-key="home_card1_desc">Estimate your system size, cost, and savings in seconds.</p>
+                                <button class="btn nav-link" data-target="#calculator" data-lang-key="home_card1_btn">Go to Calculator</button>
+                            </div>
+                            <div class="feature-card">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H21M18 18h1.5a3 3 0 0 0 0-6h-1.5m-3 0h-1.5a3 3 0 1 0 0 6H15M6.75 12.75H17.25m-10.5-3.75h10.5a3 3 0 0 1 3 3v3.75a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3v-3.75a3 3 0 0 1 3-3Z" /></svg>
+                                <h3 data-lang-key="home_card2_title">AI Assistant</h3>
+                                <p data-lang-key="home_card2_desc">Ask our AI chatbot anything about solar technology, subsidies, and maintenance.</p>
+                                <button class="btn nav-link" data-target="#chatbot" data-lang-key="home_card2_btn">Chat Now</button>
+                            </div>
+                            <div class="feature-card">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9A2.25 2.25 0 0 0 13.5 5.25h-9A2.25 2.25 0 0 0 2.25 7.5v9A2.25 2.25 0 0 0 4.5 18.75Z" /></svg>
+                                <h3 data-lang-key="home_card3_title">Your Solar Vision</h3>
+                                <p data-lang-key="home_card3_desc">Visualize your environmental impact with AI-generated reports and visuals.</p>
+                                <button class="btn nav-link" data-target="#ai-visual" data-lang-key="home_card3_btn">See Visual</button>
+                            </div>
+                            <div class="feature-card">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21.75c-.997-.997-2.327-1.5-3.75-1.5a6.75 6.75 0 0 1-6.75-6.75A6.75 6.75 0 0 1 8.25 6.75c1.423 0 2.753-.503 3.75-1.5m0 16.5c-.997-.997-2.327-1.5-3.75-1.5a6.75 6.75 0 0 1-6.75-6.75A6.75 6.75 0 0 1 8.25 6.75c1.423 0 2.753-.503 3.75-1.5m0 16.5v-1.5a3 3 0 0 1 3-3h1.5a3 3 0 0 0 3-3V12M12 21.75V12m0 9.75c.997-.997 2.327-1.5 3.75-1.5a6.75 6.75 0 0 1 6.75-6.75A6.75 6.75 0 0 1 15.75 6.75c-1.423 0-2.753-.503-3.75-1.5m0 16.5V12m0 9.75v-1.5a3 3 0 0 1-3-3h-1.5a3 3 0 0 0-3-3V12" /></svg>
+                                <h3 data-lang-key="home_card4_title">Community Impact</h3>
+                                <p data-lang-key="home_card4_desc">See the real-time environmental impact of our solar guardians worldwide.</p>
+                                <button class="btn nav-link" data-target="#dashboard" data-lang-key="home_card4_btn">See Impact</button>
+                            </div>
+                        </div>
+                        <div class="info-gallery">
+                            <h2 class="section-title" style="margin-top: 80px; margin-bottom: 50px;" data-lang-key="gallery_title">Explore the World of Solar Energy</h2>
+                            <div class="gallery-grid">
+                                <div class="gallery-card"><img src="im1.png" alt="Village with solar panels"><div class="gallery-details"><h3 data-lang-key="gallery1_title">Rural Village with Solar Panels on Rooftops</h3><p data-lang-key="gallery1_desc">This image shows a village where individual homes are equipped with rooftop solar panels.</p></div></div>
+                                <div class="gallery-card"><img src="im2.png" alt="School with solar panels"><div class="gallery-details"><h3 data-lang-key="gallery2_title">Village School with Solar Panels</h3><p data-lang-key="gallery2_desc">This image highlights a village school powered by solar energy, enabling lighting and computers for students.</p></div></div>
+                                <div class="gallery-card"><img src="im3.png" alt="Solar water pump"><div class="gallery-details"><h3 data-lang-key="gallery3_title">Agricultural Village with Solar-Powered Water Pump</h3><p data-lang-key="gallery3_desc">This image shows a solar-powered pump irrigating fields, reducing reliance on fossil fuels.</p></div></div>
+                                <div class="gallery-card"><img src="im4.png" alt="Solar streetlights"><div class="gallery-details"><h3 data-lang-key="gallery4_title">Night View of a Village Lit by Solar Streetlights</h3><p data-lang-key="gallery4_desc">Solar streetlights enhance safety and extend evening activities in villages after dark.</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="dashboard" class="page-section">
+                <div class="container">
+                    <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                    <h2 class="section-title" data-lang-key="dashboard_title">Mission Control: Community Impact</h2>
+                    <div class="dashboard-stats">
+                        <div class="stat-card"><h3 data-lang-key="dashboard_stat1_title">Collective CO₂ Saved</h3><p id="totalCo2" class="stat-number">0 t/yr</p></div>
+                        <div class="stat-card"><h3 data-lang-key="dashboard_stat2_title">Guardians Joined</h3><p id="totalUsers" class="stat-number">0</p></div>
+                        <div class="stat-card"><h3 data-lang-key="dashboard_stat3_title">Equivalent Trees Planted</h3><p id="totalTrees" class="stat-number">0</p></div>
+                    </div>
+                    <div id="communityMap" class="map-container-large"><div class="map-placeholder" data-lang-key="map_placeholder">Initializing Global Connection...</div></div>
+                    <div class="did-you-know">
+                        <h3 data-lang-key="did_you_know_title">NASA Tech on Your Roof!</h3>
+                        <p data-lang-key="did_you_know_desc">The highly efficient solar cell technology we use today was pioneered by NASA to power satellites and spacecraft. By installing solar, you're using space-age tech to protect Earth!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="calculator" class="page-section">
+                <div class="container">
+                    <div class="section-logo-container"><img src= "logo2.png" alt="Logo" class="section-logo"></div>
+                    <h2 class="section-title" data-lang-key="calc_title">Your Solar Calculator</h2>
+                    <div class="wrap">
+                        <div class="card">
+                            <div class="surveyor-section">
+                                <h3 data-lang-key="surveyor_title">Virtual Roof Surveyor</h3>
+                                <p class="lead" data-lang-key="surveyor_address_label">Enter your exact address or just your city name.</p>
+                                <div class="address-input-group">
+                                    <input type="text" id="addressInput" data-lang-key="address_input_placeholder" placeholder="e.g., Chhindwara, MP">
+                                    <button class="btn" id="detectLocationBtn" data-lang-key="detect_location_btn">Detect My Location</button>
+                                </div>
+                                <div id="map" class="map-container-calculator"><div class="map-placeholder" data-lang-key="map_load_placeholder">Map will load here...</div></div>
+                                <p class="small-text" data-lang-key="surveyor_instructions">Use the draw tool (■) on the map for exact area.</p>
+                            </div>
+                            <hr class="divider">
+                            <h1 data-lang-key="calc_heading">SOLAR FOR ALL</h1>
+                            <p class="lead" data-lang-key="calc_subtitle">Enter your bill/units to get system size, cost, and savings.</p>
+                            <div class="row">
+                                <div><label data-lang-key="calc_bill_label">Monthly Bill (₹)</label><input id="bill" type="number" value="2000" /></div>
+                                <div><label data-lang-key="calc_budget_label">Budget (₹)</label><input id="budget" type="number" data-lang-key="budget_placeholder" placeholder="Optional" /></div>
+                            </div>
+                            <div class="row">
+                                <div><label data-lang-key="calc_tariff_label">Tariff (₹/unit)</label><input id="tariff" type="number" value="7" /></div>
+                                <div><label data-lang-key="calc_cost_label">Cost per kW (₹)</label><input id="cost" type="number" value="55000" /></div>
+                            </div>
+                            <div class="row">
+                                <div><label data-lang-key="calc_roof_label">Roof Area (sq ft)</label><input id="roofArea" type="number" data-lang-key="roof_placeholder" placeholder="Auto-filled from map" readonly /></div>
+                                <div><label data-lang-key="calc_lang_label">Language</label><select id="langSelect"><option value="hi">हिन्दी</option><option value="en">English</option></select></div>
+                            </div>
+                            <hr class="divider">
+                            <div class="govt-schemes-section">
+                                <h3 data-lang-key="schemes_title">Government Schemes & Subsidy</h3>
+                                <p data-lang-key="schemes_subtitle">Get an estimate of your government subsidy.</p>
+                                <div class="row">
+                                    <div>
+                                        <label data-lang-key="schemes_state">State</label>
+                                        <select id="stateSelect">
+                                            <option value="MP">Madhya Pradesh</option>
+                                            <option value="UP">Uttar Pradesh</option>
+                                            <option value="GUJ">Gujarat</option>
+                                            <option value="OTHER">Other</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label data-lang-key="schemes_income">Monthly Income (₹)</label>
+                                        <input id="monthlyIncome" type="number" data-lang-key="income_placeholder" placeholder="e.g., 20000" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <label data-lang-key="schemes_bank">Loan Bank</label>
+                                        <select id="bankSelect">
+                                            <option value="SBI">SBI</option>
+                                            <option value="HDFC">HDFC Bank</option>
+                                            <option value="PNB">PNB</option>
+                                            <option value="NONE" data-lang-key="no_loan_option">No Loan</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label data-lang-key="schemes_panel">Panel Type</label>
+                                        <select id="panelTypeSelect">
+                                            <option value="MONO">Mono-PERC</option>
+                                            <option value="POLY">Polycrystalline</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="weather-info" class="weather-info" style="display:none;"></div>
+                            <div class="button-group">
+                                <button class="btn" onclick="calculate()" data-lang-key="calc_calc_btn">Calculate</button>
+                                <button class="mutebtn" onclick="resetAll()" data-lang-key="calc_reset_btn">Reset</button>
+                            </div>
+                            <div class="results-container">
+                                <div id="results" style="display:none;"></div>
+                                <div id="subsidy-results" style="display:none;"></div>
+                                <div id="gamification-results" style="display:none;"></div>
+                                <div id="aqi-container" style="display:none; margin-top: 1rem;">
+                                    <h3 data-lang-key="aqi_title" style="margin-bottom: 1rem; text-align: center;">Live Air Quality</h3>
+                                    <div id="aqi-results" class="stat-card"></div>
+                                </div>
+                            </div>
+                            <h3 id="emi-title" style="display:none;" data-lang-key="calc_emi_title">EMI Comparison</h3>
+                            <div class="chart-container"><canvas id="emiChart"></canvas></div>
+                            <h3 id="pollution-title" style="display:none;" data-lang-key="pollution_title">Pollution Reduction Impact</h3>
+                            <div class="chart-container"><canvas id="pollutionChart"></canvas></div>
+                            <button class="btn" onclick="generateAI()" data-lang-key="explainer_generate_btn" style="margin-top: 2rem;">✨ <span data-lang-key="explainer_generate_btn_text">Generate Solar Analysis</span></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="chatbot" class="page-section">
+                <div class="container">
+                    <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                    <h2 class="section-title" data-lang-key="chat_title">Ask Your Solar Bot 🤖</h2>
+                    <div class="card" style="max-width: 900px; margin: 0 auto;">
+                        <div id="chatLog" class="chat-log">
+                            <div class="chat-message bot-msg" data-lang-key="chat_welcome">Hello! I'm here to answer your questions about solar energy.</div>
+                        </div>
+                        <div id="typing-indicator" style="display: none;">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="chat-input-row">
+                            <input type="text" id="chatInput" data-lang-key="chat_placeholder" placeholder="e.g., How much does solar energy cost?" onkeydown="handleChatInput(event)" />
+                            <button class="btn" onclick="askChatbot()" data-lang-key="chat_send_btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-explainer" class="page-section">
+                <div class="container">
+                    <div class="info-section">
+                        <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                        <h2 class="section-title" data-lang-key="explainer_title">Solar Analysis</h2>
+                        <p data-lang-key="explainer_subtitle">Here is your personalized analysis and voice-over script.</p>
+                        <div class="card" style="margin-top: 2rem; text-align: left;">
+                            <div class="explainer">
+                                <div id="anim-main" class="speechArea" data-lang-key="explainer_placeholder">Your generated script will appear here after calculation.</div>
+                            </div>
+                            <div id="playStopButtons-main" class="visible" style="gap: 10px; margin-top: 15px; display:flex;">
+                                <button class="btn" onclick="playSpeech()" data-lang-key="explainer_play_btn">Play</button>
+                                <button class="mutebtn" onclick="pauseSpeech()" data-lang-key="explainer_stop_btn">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-visual" class="page-section">
+                <div class="container">
+                    <div class="info-section">
+                        <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                        <h2 class="section-title" data-lang-key="visual_title">Your Solar Vision</h2>
+                        <p data-lang-key="visual_subtitle">Here you can view a personalized visual based on your solar energy calculation. Just click 'Generate Visual'!</p>
+                        <div class="ai-visual-placeholder"><p data-lang-key="visual_placeholder">Visual will appear here</p></div>
+                        <img id="aiVisual" alt="AI Generated Explainer Image" style="display:none;">
+                        <button class="btn" onclick="generateExplainerVisual()" data-lang-key="visual_generate_btn">Generate Visual</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="ai-video" class="page-section">
+                <div class="container">
+                    <div class="info-section">
+                        <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                        <h2 class="section-title" data-lang-key="video_title">Installation Preview</h2>
+                        <p data-lang-key="video_subtitle">Here you can watch a personalized video based on your solar energy calculation. Just click 'Generate Video'!</p>
+                        <div class="ai-video-placeholder"><p data-lang-key="video_placeholder">Video will appear here</p></div>
+                        <video id="aiVideo" controls style="display:none;"></video>
+                        <button class="btn" onclick="generateExplainerVideo()" data-lang-key="video_generate_btn">Generate Video</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="help" class="page-section">
+                <div class="container">
+                    <div class="info-section">
+                        <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                        <h2 class="section-title" data-lang-key="help_title">Help Center</h2>
+                        <p data-lang-key="help_subtitle1">Here you will find answers to frequently asked questions about solar energy, our calculator, and services.</p>
+                        <ul class="faq-list">
+                            <li class="faq-item"><h4 data-lang-key="faq1_q">What is solar energy?</h4><p data-lang-key="faq1_a">Solar energy is energy generated by converting sunlight into electricity, typically using photovoltaic (PV) panels.</p></li>
+                            <li class="faq-item"><h4 data-lang-key="faq2_q">What are the benefits of solar energy?</h4><p data-lang-key="faq2_a">Solar energy reduces electricity bills, decreases the carbon footprint, and provides energy independence.</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact" class="page-section">
+                <div class="container">
+                    <div class="info-section">
+                        <div class="section-logo-container"><img src="logo2.png" alt="Logo" class="section-logo"></div>
+                        <h2 class="section-title" data-lang-key="contact_title">Contact Us</h2>
+                        <p data-lang-key="contact_subtitle">Contact us to learn more about our solar energy solutions or for any inquiries.</p>
+                        <form class="contact-form">
+                            <input type="text" data-lang-key="contact_name_placeholder" placeholder="Your Name" />
+                            <input type="email" data-lang-key="contact_email_placeholder" placeholder="Your Email" />
+                            <textarea data-lang-key="contact_message_placeholder" placeholder="Your Message" rows="5"></textarea>
+                            <button type="submit" class="btn" data-lang-key="contact_send_btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div id="messageBox" class="message-box"></div>
+        <footer><p data-lang-key="footer_text">&copy; 2025 SOLAR FOR ALL.</p></footer>
+    </div> 
+
+    <div id="colonist-modal" class="modal-backdrop" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeColonistModal()">&times;</span>
+            <h2 data-lang-key="colonist_title">🚀 Solar Colonist Mode</h2>
+            <p data-lang-key="colonist_subtitle">Here's the solar setup your home would need to survive off-world.</p>
+            <div class="colonist-plans">
+                <div class="plan-card mars"><h3><span data-lang-key="mars_title">On Mars</span></h3><p data-lang-key="mars_description">Due to a thin atmosphere and dust storms, you'd need a robust system.</p><div class="stat"><h3 id="mars-kw">- kW</h3><p data-lang-key="system_size_label">System Size</p></div><div class="stat"><h3 id="mars-battery">- kWh</h3><p data-lang-key="battery_storage_label">Battery Storage</p></div></div>
+                <div class="plan-card moon"><h3><span data-lang-key="moon_title">On The Moon</span></h3><p data-lang-key="moon_description">To survive the 14-day lunar night, massive energy storage is critical.</p><div class="stat"><h3 id="moon-kw">- kW</h3><p data-lang-key="system_size_label">System Size</p></div><div class="stat"><h3 id="moon-battery">- kWh</h3><p data-lang-key="battery_storage_label">Battery Storage</p></div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
