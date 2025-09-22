@@ -1,5 +1,5 @@
-// ===== GLOBAL VARIABLES & STATE =====
-const myVisualImages = ['image/gen1.jpg', 'image/gen2.jpg', 'image/gen3.jpg', 'image/gen4.jpg', 'image/gen5.jpg'];
+
+const myVisualImages = ['gen1.jpg', 'gen2.jpg', 'gen3.jpg', 'gen4.jpg', 'gen5.jpg'];
 const myAiVideos = ['videos/explainer1.mp4', 'videos/explainer2.mp4', 'videos/explainer3.mp4', 'videos/explainer4.mp4'];
 let map, communityMap, drawnItems, drawControl, chart, pollutionChart, lastCalc, communityData = [],
     locationDetected = false,
@@ -7,11 +7,11 @@ let map, communityMap, drawnItems, drawControl, chart, pollutionChart, lastCalc,
     detectedLat = null,
     detectedLon = null;
 
-// ===== API TOKENS =====
+
 const AQI_TOKEN = "344eccebdba6c88cebea99bdd4aeac5f440e0a9b";
 const NASA_TOKEN = "i4Vjou3u6oUk3dmcGGDixhSIviXGPDB6pR7gTY0H";
 
-// ===== API FUNCTIONS =====
+
 async function getAQI(lat, lon) {
     const url = `https://api.waqi.info/feed/geo:${lat};${lon}/?token=${AQI_TOKEN}`;
     try {
@@ -49,8 +49,6 @@ async function getNasaSolarData(lat, lon) {
     }
 }
 
-// Hugging Face API ab isme use nahi ho raha, isliye is function ko ab hum nahi chalaenge.
-// async function callHF(prompt) { ... }
 
 async function getAddress(lat, lon) {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
@@ -66,7 +64,7 @@ async function getAddress(lat, lon) {
     }
 }
 
-// ===== INITIALIZATION & EVENT LISTENERS =====
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('main-app').style.display = 'none';
     document.getElementById('login-container').style.display = 'flex';
@@ -582,7 +580,7 @@ async function askChatbot() {
     const typingIndicator = document.getElementById('typing-indicator');
     typingIndicator.style.display = 'flex';
 
-    // सबसे पहले आम सवालों के लिए लोकल जवाब देखें
+    
     const lowerCaseInput = input.toLowerCase();
     const isHindi = currentLanguage === 'hi';
     let botReply = '';
@@ -598,7 +596,7 @@ async function askChatbot() {
     }
 
     if (botReply) {
-        // अगर लोकल जवाब मिल गया, तो तुरंत उसे दिखाएं
+       
         await new Promise(resolve => setTimeout(resolve, 500));
         addMessageToLog(botReply, 'bot-msg');
         typingIndicator.style.display = 'none';
@@ -607,7 +605,7 @@ async function askChatbot() {
         return;
     }
 
-    // अगर लोकल जवाब नहीं मिला, तो server error message दिखाएं
+   
     await new Promise(resolve => setTimeout(resolve, 500));
     addMessageToLog(translations['chatbot_no_answer'][currentLanguage], 'bot-msg');
 
@@ -617,7 +615,7 @@ async function askChatbot() {
 }
 
 const translations = {
-    // Navigational & Static Text
+    
     app_title: { en: "SOLAR FOR ALL", hi: "SOLAR FOR ALL" },
     login_username_placeholder: { en: "Enter Username", hi: "यूजरनेम दर्ज करें" },
     login_password_placeholder: { en: "Enter Password", hi: "पासवर्ड दर्ज करें" },
@@ -730,7 +728,7 @@ const translations = {
     system_size_label: { en: "System Size", hi: "सिस्टम का आकार" },
     battery_storage_label: { en: "Battery Storage", hi: "बैटरी स्टोरेज" },
     
-    // Calculator & Result Translations
+    
     invalid_input: { en: "Please enter valid positive numbers for bill, tariff, and cost.", hi: "कृपया बिल, टैरिफ और लागत के लिए वैध सकारात्मक संख्याएं दर्ज करें।" },
     system_size_adjusted_roof: { en: "System size adjusted to fit your roof area.", hi: "सिस्टम का आकार आपकी छत के क्षेत्रफल के अनुसार समायोजित किया गया है।" },
     system_size_adjusted_budget: { en: "System size adjusted to fit your budget.", hi: "सिस्टम का आकार आपके बजट के अनुसार समायोजित किया गया है।" },
@@ -771,7 +769,6 @@ const translations = {
     video_error: { en: "Please run a calculation first.", hi: "कृपया पहले एक गणना चलाएँ।" },
     video_generated: { en: "AI video generated!", hi: "AI वीडियो उत्पन्न हुआ!" },
     chatbot_error: { en: "Sorry, I am having trouble connecting. Please try again later.", hi: "क्षमा करें, मुझे कनेक्ट करने में समस्या हो रही है। कृपया बाद में पुनः प्रयास करें।" },
-    // New Translations for messages
     message_sent_success: { en: "Message sent successfully!", hi: "संदेश सफलतापूर्वक भेजा गया!" },
     invalid_login: { en: "Invalid username or password.", hi: "अवैध उपयोगकर्ता नाम या पासवर्ड।" },
     calculating_solar: { en: "Calculating your solar potential...", hi: "आपकी सौर क्षमता की गणना की जा रही है..." },
@@ -797,8 +794,580 @@ const translations = {
     aqi_city: { en: "City", hi: "शहर" },
     chatbot_no_answer: { en: "I'm sorry, I can only answer questions from my knowledge base. Please ask about solar energy.", hi: "क्षमा करें, मैं केवल अपने ज्ञानकोष के प्रश्नों का उत्तर दे सकता हूँ। कृपया सौर ऊर्जा के बारे में पूछें।" },
 
-    // Final Q&A for Chatbot
+    
     chatbot_fallback_answers: {
+        greetings: {greetings: {
+            keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+            answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+            answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        how_are_you: {
+            keywords: ["how are you", "kaise ho", "kya haal hai"],
+            answer_en: "I'm doing great! How can I help you with solar power today?",
+            answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        who_are_you: {
+            keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+            answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+            answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+        },
+        what_can_you_do: {
+            keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+            answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+            answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+        },
+        are_you_a_solar_chatbot: {
+            keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+            answer_en: "Yes, I am a specialized chatbot for solar energy.",
+            answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+        },
+        
+        what_is_solar_energy: {
+            keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery"],
+            answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+            answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है。"
+        },
+        how_does_solar_energy_work: {
+            keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+            answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+            answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+        },
+        benefits_of_solar_energy: {
+            keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power"],
+            answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+            answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+        },
+        disadvantages_of_solar_energy: {
+            keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list"],
+            answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+            answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+        },
+        difference_solar_power_energy: {
+            keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+            answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+            answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+        },
+        what_is_a_solar_cell: {
+            keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working"],
+            answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+            answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+        },
+        what_is_photovoltaic_energy: {
+            keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar"],
+            answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+            answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_solar_energy_run_a_house: {
+            keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price"],
+            answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+            answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+        },
+        can_solar_energy_work_at_night: {
+            keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght"],
+            answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+            answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+        },
+        
+        what_are_solar_panels: {
+            keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal"],
+            answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+            answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+        },
+        types_of_solar_panels: {
+            keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel"],
+            answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+            answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+        },
+        best_panel_for_home: {
+            keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best"],
+            answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+            answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+        },
+        efficiency_of_solar_panels: {
+            keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency"],
+            answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+            answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+        },
+        lifespan_of_solar_panels: {
+            keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl"],
+            answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+            answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+        },
+        cost_of_solar_panels_india: {
+            keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel"],
+            answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+            answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+        },
+        how_many_panels_for_house: {
+            keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+            answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+            answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+        },
+       
+        how_to_install_solar_panels: {
+            keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost"],
+            answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+            answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+        },
+        space_required_for_solar_panels: {
+            keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar"],
+            answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+            answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+        },
+        rooftop_installation_process: {
+            keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process"],
+            answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+            answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+        },
+        on_grid_vs_off_grid: {
+            keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm"],
+            answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+            answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+        },
+        cost_of_system_size: {
+            keywords: ["cost of installing a 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system"],
+            answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+            answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+        },
+        government_subsidy: {
+            keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt"],
+            answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+            answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+        },
+        how_to_clean_solar_panels: {
+            keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel"],
+            answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+            answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+        },
+        do_solar_panels_work_on_cloudy_days: {
+            keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work"],
+            answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+            answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं।"
+        },
+        common_problems_in_solar_panels: {
+            keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal"],
+            answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+            answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+        },
+        maintenance_cost: {
+            keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel"],
+            answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+            answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+        },
+       
+        what_is_a_solar_inverter: {
+            keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer"],
+            answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+            answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+        },
+        types_of_solar_inverters: {
+            keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr"],
+            answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+            answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+        },
+        what_is_a_solar_battery: {
+            keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery"],
+            answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+            answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+        },
+        types_of_solar_batteries: {
+            keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries"],
+            answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+            answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+        },
+        how_long_do_solar_batteries_last: {
+            keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery"],
+            answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+            answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+        },
+        
+        how_much_money_can_i_save: {
+            keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty"],
+            answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+            answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+        },
+        payback_period: {
+            keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm"],
+            answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+            answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+        },
+        how_does_solar_help_environment: {
+            keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar"],
+            answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+            answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+        },
+      
+        what_is_solar_cell_efficiency: {
+            keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+            answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+            answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है。"
+        },
+        what_is_net_metering: {
+            keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+            answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+            answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+        },
+        what_factors_affect_efficiency: {
+            keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+            answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+            answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+        },
+       
+        does_solar_work_in_rainy_season: {
+            keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain"],
+            answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+            answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+        },
+        best_location_for_panels: {
+            keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal"],
+            answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+            answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+        },
+       
+        can_solar_power_a_car: {
+            keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+            answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+            answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_i_run_ac_on_solar: {
+            keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar"],
+            answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+            answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+        },
+        
+        solar_application: {
+            keywords: ["solar application kya h", "soler aplication use", "applctns of solar enrg", "daily use of sola enrg", "use of solr in daily life", "exmples of solr device"],
+            answer_en: "Solar energy is used for a wide range of applications, including heating water, generating electricity for homes and businesses, powering streetlights, and charging portable devices.",
+            answer_hi: "सौर ऊर्जा का उपयोग कई अनुप्रयोगों के लिए किया जाता है, जिसमें पानी गर्म करना, घरों और व्यवसायों के लिए बिजली उत्पन्न करना, स्ट्रीटलाइट्स को बिजली देना और पोर्टेबल उपकरणों को चार्ज करना शामिल है।"
+        },
+        solar_appliances: {
+            keywords: ["solar appliance list", "appliances work on sola", "solar box cooker kaise bnta", "solar stove kaise bnta", "solar study lamp"],
+            answer_en: "Common solar appliances include solar lamps, cookers, water heaters, and refrigerators. Many home appliances like TVs and fans can also run on a solar power system.",
+            answer_hi: "सामान्य सौर उपकरणों में सौर लैंप, कुकर, वॉटर हीटर और रेफ्रिजरेटर शामिल हैं। टीवी और पंखे जैसे कई घरेलू उपकरण भी सौर ऊर्जा प्रणाली पर चल सकते हैं।"
+        },
+        solar_project_college: {
+            keywords: ["solar based project for clg", "easy solr projct for studnt", "project on solr enrg"],
+            answer_en: "Some popular college projects on solar energy include solar-powered mobile chargers, solar cookers, and solar-powered smart streetlights.",
+            answer_hi: "सौर ऊर्जा पर कुछ लोकप्रिय कॉलेज परियोजनाओं में सौर-ऊर्जा से चलने वाले मोबाइल चार्जर, सौर कुकर और सौर-ऊर्जा से चलने वाली स्मार्ट स्ट्रीटलाइट्स शामिल हैं।"
+        },
+        solar_vs_wind: {
+            keywords: ["comparison solar vs wind", "diff between solar n wind"],
+            answer_en: "Solar energy depends on sunlight and is quiet. Wind energy depends on wind and can be noisy. Both are renewable sources.",
+            answer_hi: "सौर ऊर्जा सूरज की रोशनी पर निर्भर करती है और शांत होती है। पवन ऊर्जा हवा पर निर्भर करती है और शोरगुल वाली हो सकती है। दोनों ही नवीकरणीय स्रोत हैं।"
+        },
+        solar_in_rain: {
+            keywords: ["can solar work in rain", "solr wrk in rany seson"],
+            answer_en: "Solar panels work in the rain, but their output is lower. Rain also helps to clean the panels, which can improve efficiency later.",
+            answer_hi: "सौर पैनल बारिश में काम करते हैं, लेकिन उनका उत्पादन कम होता है। बारिश पैनलों को साफ करने में भी मदद करती है, जिससे बाद में दक्षता में सुधार हो सकता है।"
+        },
+        solar_panel_angle: {
+            keywords: ["panel angle solar setup", "y solar panel angle imp"],
+            answer_en: "The angle of solar panels is crucial for maximum sunlight absorption. The best angle depends on your location and the season.",
+            answer_hi: "अधिकतम सूर्य के प्रकाश को अवशोषित करने के लिए सोलर पैनलों का कोण महत्वपूर्ण है। सबसे अच्छा कोण आपके स्थान और मौसम पर निर्भर करता है।"
+        },
+        solar_in_space: {
+            keywords: ["can solar work in space", "solr wrk in spce"],
+            answer_en: "Yes, solar power works very well in space, as there is no atmosphere to block the sunlight. Satellites and spacecraft use solar panels to power their systems.",
+            answer_hi: "हाँ, सौर ऊर्जा अंतरिक्ष में बहुत अच्छी तरह से काम करती है, क्योंकि सूर्य के प्रकाश को अवरुद्ध करने के लिए कोई वायुमंडल नहीं है। उपग्रह और अंतरिक्ष यान अपने सिस्टम को बिजली देने के लिए सौर पैनलों का उपयोग करते हैं।"
+        },
+        
+        cost_of_system: {
+            keywords: ["solar cost", "kitna kharcha", "kitna kharch", "price", "cost to install", "cost kitna", "cost", "kharcha", "price"],
+            answer_en: "The cost depends on your electricity bill and the size of your roof. Our calculator can provide an estimated cost for you.",
+            answer_hi: "लागत आपके बिजली के बिल और छत के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपके लिए अनुमानित खर्च बता सकता है।"
+        },
+            keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+            answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+            answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        how_are_you: {
+            keywords: ["how are you", "kaise ho", "kya haal hai"],
+            answer_en: "I'm doing great! How can I help you with solar power today?",
+            answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        who_are_you: {
+            keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+            answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+            answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+        },
+        what_can_you_do: {
+            keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+            answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+            answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+        },
+        are_you_a_solar_chatbot: {
+            keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+            answer_en: "Yes, I am a specialized chatbot for solar energy.",
+            answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+        },
+        // 2. Basic Solar Knowledge
+        what_is_solar_energy: {
+            keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery"],
+            answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+            answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है।"
+        },
+        how_does_solar_energy_work: {
+            keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+            answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+            answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+        },
+        benefits_of_solar_energy: {
+            keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power"],
+            answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+            answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+        },
+        disadvantages_of_solar_energy: {
+            keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list"],
+            answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+            answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+        },
+        difference_solar_power_energy: {
+            keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+            answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+            answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+        },
+        what_is_a_solar_cell: {
+            keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working"],
+            answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+            answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+        },
+        what_is_photovoltaic_energy: {
+            keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar"],
+            answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+            answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_solar_energy_run_a_house: {
+            keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price"],
+            answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+            answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+        },
+        can_solar_energy_work_at_night: {
+            keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght"],
+            answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+            answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+        },
+       
+        what_are_solar_panels: {
+            keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal"],
+            answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+            answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+        },
+        types_of_solar_panels: {
+            keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel"],
+            answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+            answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+        },
+        best_panel_for_home: {
+            keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best"],
+            answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+            answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+        },
+        efficiency_of_solar_panels: {
+            keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency"],
+            answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+            answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+        },
+        lifespan_of_solar_panels: {
+            keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl"],
+            answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+            answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+        },
+        cost_of_solar_panels_india: {
+            keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel"],
+            answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+            answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+        },
+        how_many_panels_for_house: {
+            keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+            answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+            answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+        },
+        how_to_install_solar_panels: {
+            keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost"],
+            answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+            answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+        },
+        space_required_for_solar_panels: {
+            keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar"],
+            answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+            answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+        },
+        rooftop_installation_process: {
+            keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process"],
+            answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+            answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+        },
+        on_grid_vs_off_grid: {
+            keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm"],
+            answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+            answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+        },
+        cost_of_system_size: {
+            keywords: ["cost of installing 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system"],
+            answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+            answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+        },
+        government_subsidy: {
+            keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt"],
+            answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+            answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+        },
+        how_to_clean_solar_panels: {
+            keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel"],
+            answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+            answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+        },
+        do_solar_panels_work_on_cloudy_days: {
+            keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work"],
+            answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+            answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं।"
+        },
+        common_problems_in_solar_panels: {
+            keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal"],
+            answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+            answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+        },
+        maintenance_cost: {
+            keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel"],
+            answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+            answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+        },
+       
+        what_is_a_solar_inverter: {
+            keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer"],
+            answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+            answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+        },
+        types_of_solar_inverters: {
+            keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr"],
+            answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+            answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+        },
+        what_is_a_solar_battery: {
+            keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery"],
+            answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+            answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+        },
+        types_of_solar_batteries: {
+            keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries"],
+            answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+            answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+        },
+        how_long_do_solar_batteries_last: {
+            keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery"],
+            answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+            answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+        },
+        
+        how_much_money_can_i_save: {
+            keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty"],
+            answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+            answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+        },
+        payback_period: {
+            keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm"],
+            answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+            answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+        },
+        how_does_solar_help_environment: {
+            keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar"],
+            answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+            answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+        },
+        
+        what_is_solar_cell_efficiency: {
+            keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+            answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+            answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है।"
+        },
+        what_is_net_metering: {
+            keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+            answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+            answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+        },
+        what_factors_affect_efficiency: {
+            keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+            answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+            answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+        },
+       
+        does_solar_work_in_rainy_season: {
+            keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain"],
+            answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+            answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+        },
+        best_location_for_panels: {
+            keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal"],
+            answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+            answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+        },
+        
+        can_solar_power_a_car: {
+            keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+            answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+            answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_i_run_ac_on_solar: {
+            keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar"],
+            answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+            answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+        },
+       
+        solar_application: {
+            keywords: ["solar application kya h", "soler aplication use", "applctns of solar enrg", "daily use of sola enrg", "use of solr in daily life", "exmples of solr device"],
+            answer_en: "Solar energy is used for a wide range of applications, including heating water, generating electricity for homes and businesses, powering streetlights, and charging portable devices.",
+            answer_hi: "सौर ऊर्जा का उपयोग कई अनुप्रयोगों के लिए किया जाता है, जिसमें पानी गर्म करना, घरों और व्यवसायों के लिए बिजली उत्पन्न करना, स्ट्रीटलाइट्स को बिजली देना और पोर्टेबल उपकरणों को चार्ज करना शामिल है।"
+        },
+        solar_appliances: {
+            keywords: ["solar appliance list", "appliances work on sola", "solar box cooker kaise bnta", "solar stove kaise bnta", "solar study lamp"],
+            answer_en: "Common solar appliances include solar lamps, cookers, water heaters, and refrigerators. Many home appliances like TVs and fans can also run on a solar power system.",
+            answer_hi: "सामान्य सौर उपकरणों में सौर लैंप, कुकर, वॉटर हीटर और रेफ्रिजरेटर शामिल हैं। टीवी और पंखे जैसे कई घरेलू उपकरण भी सौर ऊर्जा प्रणाली पर चल सकते हैं।"
+        },
+        solar_project_college: {
+            keywords: ["solar based project for clg", "easy solr projct for studnt", "project on solr enrg"],
+            answer_en: "Some popular college projects on solar energy include solar-powered mobile chargers, solar cookers, and solar-powered smart streetlights.",
+            answer_hi: "सौर ऊर्जा पर कुछ लोकप्रिय कॉलेज परियोजनाओं में सौर-ऊर्जा से चलने वाले मोबाइल चार्जर, सौर कुकर और सौर-ऊर्जा से चलने वाली स्मार्ट स्ट्रीटलाइट्स शामिल हैं।"
+        },
+        solar_vs_wind: {
+            keywords: ["comparison solar vs wind", "diff between solar n wind"],
+            answer_en: "Solar energy depends on sunlight and is quiet. Wind energy depends on wind and can be noisy. Both are renewable sources.",
+            answer_hi: "सौर ऊर्जा सूरज की रोशनी पर निर्भर करती है और शांत होती है। पवन ऊर्जा हवा पर निर्भर करती है और शोरगुल वाली हो सकती है। दोनों ही नवीकरणीय स्रोत हैं।"
+        },
+        solar_in_rain: {
+            keywords: ["can solar work in rain", "solr wrk in rany seson"],
+            answer_en: "Solar panels work in the rain, but their output is lower. Rain also helps to clean the panels, which can improve efficiency later.",
+            answer_hi: "सौर पैनल बारिश में काम करते हैं, लेकिन उनका उत्पादन कम होता है। बारिश पैनलों को साफ करने में भी मदद करती है, जिससे बाद में दक्षता में सुधार हो सकता है।"
+        },
+        solar_panel_angle: {
+            keywords: ["panel angle solar setup", "y solar panel angle imp"],
+            answer_en: "The angle of solar panels is crucial for maximum sunlight absorption. The best angle depends on your location and the season.",
+            answer_hi: "अधिकतम सूर्य के प्रकाश को अवशोषित करने के लिए सोलर पैनलों का कोण महत्वपूर्ण है। सबसे अच्छा कोण आपके स्थान और मौसम पर निर्भर करता है।"
+        },
+        solar_in_space: {
+            keywords: ["can solar work in space", "solr wrk in spce"],
+            answer_en: "Yes, solar power works very well in space, as there is no atmosphere to block the sunlight. Satellites and spacecraft use solar panels to power their systems.",
+            answer_hi: "हाँ, सौर ऊर्जा अंतरिक्ष में बहुत अच्छी तरह से काम करती है, क्योंकि सूर्य के प्रकाश को अवरुद्ध करने के लिए कोई वायुमंडल नहीं है। उपग्रह और अंतरिक्ष यान अपने सिस्टम को बिजली देने के लिए सौर पैनलों का उपयोग करते हैं।"
+        },
         // 1. Greetings / General Conversation
         greetings: {
             keywords: ["hi", "hello", "hey", "namaste", "namaskar"],
@@ -825,7 +1394,7 @@ const translations = {
             answer_en: "Yes, I am a specialized chatbot for solar energy.",
             answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
         },
-        // 2. Basic Solar Knowledge
+        
         what_is_solar_energy: {
             keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai"],
             answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
@@ -856,7 +1425,7 @@ const translations = {
             answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
             answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
         },
-        // 3. Solar Panels
+        
         what_are_solar_panels: {
             keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai"],
             answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
@@ -918,7 +1487,7 @@ const translations = {
             answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
             answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
         },
-        // 5. Solar Maintenance & Issues
+       
         how_to_clean_solar_panels: {
             keywords: ["how to clean solar panels", "solar panel kaise saaf karein"],
             answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
@@ -949,7 +1518,6 @@ const translations = {
             answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
             answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
         },
-        // 6. Solar Batteries & Inverters
         what_is_a_solar_inverter: {
             keywords: ["what is a solar inverter", "solar inverter kya hota hai"],
             answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
@@ -970,7 +1538,7 @@ const translations = {
             answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
             answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
         },
-        // 7. Financial & Environmental Aspects
+       
         how_much_money_can_i_save: {
             keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat"],
             answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
@@ -986,7 +1554,7 @@ const translations = {
             answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
             answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
         },
-        // 8. Advanced & Technical Questions
+       
         what_is_solar_cell_efficiency: {
             keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai"],
             answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
@@ -1002,7 +1570,6 @@ const translations = {
             answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
             answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
         },
-        // 9. Location & Weather Based
         does_solar_work_in_rainy_season: {
             keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai"],
             answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
@@ -1013,7 +1580,6 @@ const translations = {
             answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
             answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
         },
-        // 10. Fun & Random Questions
         can_solar_power_a_car: {
             keywords: ["can solar power a car", "kya solar se car chala sakte hain"],
             answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
@@ -1029,6 +1595,1000 @@ const translations = {
             answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
             answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
         },
+        greetings: {
+            keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+            answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+            answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        how_are_you: {
+            keywords: ["how are you", "kaise ho", "kya haal hai"],
+            answer_en: "I'm doing great! How can I help you with solar power today?",
+            answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        who_are_you: {
+            keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+            answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+            answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+        },
+        what_can_you_do: {
+            keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+            answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+            answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+        },
+        are_you_a_solar_chatbot: {
+            keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+            answer_en: "Yes, I am a specialized chatbot for solar energy.",
+            answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+        },
+        
+        what_is_solar_energy: {
+            keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery", "solar", "energy"],
+            answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+            answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है।"
+        },
+        how_does_solar_energy_work: {
+            keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+            answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+            answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+        },
+        benefits_of_solar_energy: {
+            keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power", "benefits", "fayde"],
+            answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+            answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+        },
+        disadvantages_of_solar_energy: {
+            keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list", "disadvantages", "nuksaan"],
+            answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+            answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+        },
+        difference_solar_power_energy: {
+            keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+            answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+            answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+        },
+        what_is_a_solar_cell: {
+            keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working", "solar cell", "cell"],
+            answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+            answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+        },
+        what_is_photovoltaic_energy: {
+            keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar", "photovoltaic"],
+            answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+            answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell", "invented", "inventor"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_solar_energy_run_a_house: {
+            keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price", "run house", "ghar chala"],
+            answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+            answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+        },
+        can_solar_energy_work_at_night: {
+            keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght", "night", "raat"],
+            answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+            answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+        },
+        
+        what_are_solar_panels: {
+            keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal", "panels", "panel", "panals"],
+            answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+            answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+        },
+        types_of_solar_panels: {
+            keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel", "types"],
+            answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+            answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+        },
+        best_panel_for_home: {
+            keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best", "best panel", "best for home"],
+            answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+            answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+        },
+        efficiency_of_solar_panels: {
+            keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency", "efficiency"],
+            answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+            answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+        },
+        lifespan_of_solar_panels: {
+            keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl", "lifespan", "life span"],
+            answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+            answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+        },
+        cost_of_solar_panels_india: {
+            keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel", "cost", "kharcha", "price", "daam", "rate", "total cost", "total kharcha"],
+            answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+            answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+        },
+        how_many_panels_for_house: {
+            keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+            answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+            answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+        },
+       
+        how_to_install_solar_panels: {
+            keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost", "install", "installation"],
+            answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+            answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+        },
+        space_required_for_solar_panels: {
+            keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar", "space", "jagah"],
+            answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+            answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+        },
+        rooftop_installation_process: {
+            keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process", "rooftop"],
+            answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+            answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+        },
+        on_grid_vs_off_grid: {
+            keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm", "on grid", "off grid"],
+            answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+            answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+        },
+        cost_of_system_size: {
+            keywords: ["cost of installing 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system", "1kw", "3kw", "5kw"],
+            answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+            answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+        },
+        government_subsidy: {
+            keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt", "subsidy", "sarkari scheme"],
+            answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+            answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+        },
+        how_to_clean_solar_panels: {
+            keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel", "clean", "saaf"],
+            answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+            answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+        },
+        do_solar_panels_work_on_cloudy_days: {
+            keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work", "cloudy", "badal"],
+            answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+            answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं।"
+        },
+        common_problems_in_solar_panels: {
+            keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal", "problems", "samasyayein"],
+            answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+            answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+        },
+        maintenance_cost: {
+            keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel", "maintenance"],
+            answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+            answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+        },
+        
+        what_is_a_solar_inverter: {
+            keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer", "inverter"],
+            answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+            answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+        },
+        types_of_solar_inverters: {
+            keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr", "inverter types"],
+            answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+            answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+        },
+        what_is_a_solar_battery: {
+            keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery", "battery"],
+            answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+            answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+        },
+        types_of_solar_batteries: {
+            keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries", "battery types"],
+            answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+            answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+        },
+        how_long_do_solar_batteries_last: {
+            keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery", "battery life"],
+            answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+            answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+        },
+        
+        how_much_money_can_i_save: {
+            keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty", "save money", "savings", "bachat"],
+            answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+            answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+        },
+        payback_period: {
+            keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm", "payback"],
+            answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+            answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+        },
+        how_does_solar_help_environment: {
+            keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar", "environment", "paryavaran"],
+            answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+            answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+        },
+        
+        what_is_solar_cell_efficiency: {
+            keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+            answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+            answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है।"
+        },
+        what_is_net_metering: {
+            keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+            answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+            answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+        },
+        what_factors_affect_efficiency: {
+            keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+            answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+            answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+        },
+       
+        does_solar_work_in_rainy_season: {
+            keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain"],
+            answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+            answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+        },
+        best_location_for_panels: {
+            keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal"],
+            answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+            answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+        },
+        
+        can_solar_power_a_car: {
+            keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+            answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+            answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_i_run_ac_on_solar: {
+            keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar"],
+            answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+            answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+        }, greetings: {
+        keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+        answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+        answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+    },
+    how_are_you: {
+        keywords: ["how are you", "kaise ho", "kya haal hai"],
+        answer_en: "I'm doing great! How can I help you with solar power today?",
+        answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+    },
+    who_are_you: {
+        keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+        answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+        answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+    },
+    what_can_you_do: {
+        keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+        answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+        answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+    },
+    are_you_a_solar_chatbot: {
+        keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+        answer_en: "Yes, I am a specialized chatbot for solar energy.",
+        answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+    },
+    
+    what_is_solar_energy: {
+        keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery", "solar", "energy"],
+        answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+        answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है।"
+    },
+    how_does_solar_energy_work: {
+        keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+        answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+        answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+    },
+    benefits_of_solar_energy: {
+        keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power", "benefits", "fayde"],
+        answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+        answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+    },
+    disadvantages_of_solar_energy: {
+        keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list", "disadvantages", "nuksaan"],
+        answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+        answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+    },
+    difference_solar_power_energy: {
+        keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+        answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+        answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+    },
+    what_is_a_solar_cell: {
+        keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working", "solar cell", "cell"],
+        answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+        answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+    },
+    what_is_photovoltaic_energy: {
+        keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar", "photovoltaic"],
+        answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+        answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+    },
+    who_invented_solar_panels: {
+        keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell", "invented", "inventor"],
+        answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+        answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+    },
+    can_solar_energy_run_a_house: {
+        keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price", "run house", "ghar chala"],
+        answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+        answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+    },
+    can_solar_energy_work_at_night: {
+        keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght", "night", "raat"],
+        answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+        answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+    },
+    
+    what_are_solar_panels: {
+        keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal", "panels", "panel", "panals"],
+        answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+        answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+    },
+    types_of_solar_panels: {
+        keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel", "types"],
+        answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+        answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+    },
+    best_panel_for_home: {
+        keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best", "best panel", "best for home"],
+        answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+        answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+    },
+    efficiency_of_solar_panels: {
+        keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency", "efficiency"],
+        answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+        answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+    },
+    lifespan_of_solar_panels: {
+        keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl", "lifespan", "life span"],
+        answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+        answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+    },
+    cost_of_solar_panels_india: {
+        keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel", "cost", "kharcha", "price", "daam", "rate", "total cost", "total kharcha", "solar panel me kharch kitna aayega"],
+        answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+        answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+    },
+    how_many_panels_for_house: {
+        keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+        answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+        answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+    },
+    
+    how_to_install_solar_panels: {
+        keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost", "install", "installation"],
+        answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+        answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+    },
+    space_required_for_solar_panels: {
+        keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar", "space", "jagah"],
+        answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+        answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+    },
+    rooftop_installation_process: {
+        keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process", "rooftop"],
+        answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+        answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+    },
+    on_grid_vs_off_grid: {
+        keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm", "on grid", "off grid"],
+        answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+        answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+    },
+    cost_of_system_size: {
+        keywords: ["cost of installing a 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system", "1kw", "3kw", "5kw"],
+        answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+        answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+    },
+    government_subsidy: {
+        keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt", "subsidy", "sarkari scheme"],
+        answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+        answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+    },
+    how_to_clean_solar_panels: {
+        keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel", "clean", "saaf"],
+        answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+        answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+    },
+    do_solar_panels_work_on_cloudy_days: {
+        keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work", "cloudy", "badal"],
+        answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+        answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं。"
+    },
+    common_problems_in_solar_panels: {
+        keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal", "problems", "samasyayein"],
+        answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+        answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+    },
+    maintenance_cost: {
+        keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel", "maintenance"],
+        answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+        answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+    },
+    
+    what_is_a_solar_inverter: {
+        keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer", "inverter"],
+        answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+        answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+    },
+    types_of_solar_inverters: {
+        keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr", "inverter types"],
+        answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+        answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+    },
+    what_is_a_solar_battery: {
+        keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery", "battery"],
+        answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+        answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+    },
+    types_of_solar_batteries: {
+        keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries", "battery types"],
+        answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+        answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+    },
+    how_long_do_solar_batteries_last: {
+        keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery", "battery life"],
+        answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+        answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+    },
+    
+    how_much_money_can_i_save: {
+        keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty", "save money", "savings", "bachat"],
+        answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+        answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+    },
+    payback_period: {
+        keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm", "payback"],
+        answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+        answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+    },
+    how_does_solar_help_environment: {
+        keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar", "environment", "paryavaran"],
+        answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+        answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+    },
+    
+    what_is_solar_cell_efficiency: {
+        keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+        answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+        answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है।"
+    },
+    what_is_net_metering: {
+        keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+        answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+        answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+    },
+    what_factors_affect_efficiency: {
+        keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+        answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+        answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+    },
+    
+    does_solar_work_in_rainy_season: {
+        keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain", "rainy season", "baarish"],
+        answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+        answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+    },
+    best_location_for_panels: {
+        keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal", "location"],
+        answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+        answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+    },
+    
+    can_solar_power_a_car: {
+        keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+        answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+        answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+    },
+    who_invented_solar_panels: {
+        keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+        answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+        answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+    },
+    can_i_run_ac_on_solar: {
+        keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar", "run ac on solar"],
+        answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+        answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+    },
+        
+        greetings: {
+            keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+            answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+            answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        how_are_you: {
+            keywords: ["how are you", "kaise ho", "kya haal hai"],
+            answer_en: "I'm doing great! How can I help you with solar power today?",
+            answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+        },
+        who_are_you: {
+            keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+            answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+            answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+        },
+        what_can_you_do: {
+            keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+            answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+            answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+        },
+        are_you_a_solar_chatbot: {
+            keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+            answer_en: "Yes, I am a specialized chatbot for solar energy.",
+            answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+        },
+        
+        what_is_solar_energy: {
+            keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery"],
+            answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+            answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है।"
+        },
+        how_does_solar_energy_work: {
+            keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+            answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+            answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+        },
+        benefits_of_solar_energy: {
+            keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power"],
+            answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+            answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+        },
+        disadvantages_of_solar_energy: {
+            keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list"],
+            answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+            answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+        },
+        difference_solar_power_energy: {
+            keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+            answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+            answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+        },
+        what_is_a_solar_cell: {
+            keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working"],
+            answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+            answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+        },
+        what_is_photovoltaic_energy: {
+            keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar"],
+            answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+            answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_solar_energy_run_a_house: {
+            keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price"],
+            answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+            answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+        },
+        can_solar_energy_work_at_night: {
+            keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght"],
+            answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+            answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+        },
+        
+        what_are_solar_panels: {
+            keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal"],
+            answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+            answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+        },
+        types_of_solar_panels: {
+            keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel"],
+            answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+            answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+        },
+        best_panel_for_home: {
+            keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best"],
+            answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+            answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+        },
+        efficiency_of_solar_panels: {
+            keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency"],
+            answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+            answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+        },
+        lifespan_of_solar_panels: {
+            keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl"],
+            answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+            answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+        },
+        cost_of_solar_panels_india: {
+            keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel"],
+            answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+            answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+        },
+        how_many_panels_for_house: {
+            keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+            answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+            answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+        },
+        
+        how_to_install_solar_panels: {
+            keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost"],
+            answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+            answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+        },
+        space_required_for_solar_panels: {
+            keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar"],
+            answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+            answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+        },
+        rooftop_installation_process: {
+            keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process"],
+            answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+            answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+        },
+        on_grid_vs_off_grid: {
+            keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm"],
+            answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+            answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+        },
+        cost_of_system_size: {
+            keywords: ["cost of installing a 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system"],
+            answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+            answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+        },
+        government_subsidy: {
+            keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt"],
+            answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+            answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+        },
+        how_to_clean_solar_panels: {
+            keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel"],
+            answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+            answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+        },
+        do_solar_panels_work_on_cloudy_days: {
+            keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work"],
+            answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+            answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं।"
+        },
+        common_problems_in_solar_panels: {
+            keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal"],
+            answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+            answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+        },
+        maintenance_cost: {
+            keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel"],
+            answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+            answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+        },
+        
+        what_is_a_solar_inverter: {
+            keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer"],
+            answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+            answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+        },
+        types_of_solar_inverters: {
+            keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr"],
+            answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+            answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+        },
+        what_is_a_solar_battery: {
+            keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery"],
+            answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+            answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+        },
+        types_of_solar_batteries: {
+            keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries"],
+            answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+            answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+        },
+        how_long_do_solar_batteries_last: {
+            keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery"],
+            answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+            answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+        },
+        
+        how_much_money_can_i_save: {
+            keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty"],
+            answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+            answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+        },
+        payback_period: {
+            keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm"],
+            answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+            answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+        },
+        how_does_solar_help_environment: {
+            keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar"],
+            answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+            answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+        },
+        
+        what_is_solar_cell_efficiency: {
+            keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+            answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+            answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है।"
+        },
+        what_is_net_metering: {
+            keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+            answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+            answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+        },
+        what_factors_affect_efficiency: {
+            keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+            answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+            answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+        },
+        
+        does_solar_work_in_rainy_season: {
+            keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain"],
+            answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+            answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+        },
+        best_location_for_panels: {
+            keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal"],
+            answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+            answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+        },
+        
+        can_solar_power_a_car: {
+            keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+            answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+            answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+        },
+        who_invented_solar_panels: {
+            keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+            answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+            answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+        },
+        can_i_run_ac_on_solar: {
+            keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar"],
+            answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+            answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+        },
+       
+    greetings: {
+        keywords: ["hi", "hello", "hey", "namaste", "namaskar", "hy", "hie", "hii", "helo", "helllo", "hlo", "heyy", "hay"],
+        answer_en: "Hello! I am a solar energy assistant. How can I help you with solar today?",
+        answer_hi: "नमस्ते! मैं एक सौर ऊर्जा सहायक हूँ। आज मैं सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+    },
+    how_are_you: {
+        keywords: ["how are you", "kaise ho", "kya haal hai"],
+        answer_en: "I'm doing great! How can I help you with solar power today?",
+        answer_hi: "मैं बहुत अच्छा हूँ! मैं आज सौर ऊर्जा से संबंधित आपकी क्या मदद कर सकता हूँ?"
+    },
+    who_are_you: {
+        keywords: ["who are you", "tum kon ho", "ap kon ho", "hu r u", "who r yu", "whu are yuo"],
+        answer_en: "I am a helpful AI assistant designed to provide information about solar energy, subsidies, and installation.",
+        answer_hi: "मैं एक सहायक AI हूँ जिसे सौर ऊर्जा, सब्सिडी और इंस्टॉलेशन के बारे में जानकारी देने के लिए डिज़ाइन किया गया है।"
+    },
+    what_can_you_do: {
+        keywords: ["what can you do", "kya kar sakte ho", "tum kya kar sakte ho", "wat can u du", "wht cn you doo", "whatt can yo do"],
+        answer_en: "I can help you calculate your solar potential, find subsidies, and answer common questions about solar energy.",
+        answer_hi: "मैं आपकी सौर क्षमता की गणना करने, सब्सिडी खोजने और सौर ऊर्जा के बारे में सामान्य प्रश्नों का उत्तर देने में आपकी मदद कर सकता हूँ।"
+    },
+    are_you_a_solar_chatbot: {
+        keywords: ["are you a solar chatbot", "kya tum solar chatbot ho"],
+        answer_en: "Yes, I am a specialized chatbot for solar energy.",
+        answer_hi: "हाँ, मैं सौर ऊर्जा के लिए एक विशेष चैटबॉट हूँ।"
+    },
+   
+    what_is_solar_energy: {
+        keywords: ["what is solar energy", "solar urja kya hai", "kya hai solar energy", "solar energy kya hai", "wat is solr enegy", "wht is solor enrgy", "whatt is soar enery", "solar", "energy"],
+        answer_en: "Solar energy is energy from the sun that is converted into thermal or electrical energy. It is a clean and renewable resource.",
+        answer_hi: "सौर ऊर्जा सूर्य से प्राप्त होने वाली ऊर्जा है जिसे तापीय या विद्युत ऊर्जा में परिवर्तित किया जाता है। यह एक स्वच्छ और नवीकरणीय संसाधन है।"
+    },
+    how_does_solar_energy_work: {
+        keywords: ["how does solar energy work", "solar energy kaise kaam karta hai", "kaise kaam karti hai solar energy", "how du solr enegy wrk", "hw dos solor enrgy work", "howduss soar enrg wrks"],
+        answer_en: "Solar panels absorb sunlight and convert it into direct current (DC) electricity through the photovoltaic effect. An inverter then converts this DC into alternating current (AC) for home use.",
+        answer_hi: "सोलर पैनल सूर्य के प्रकाश को अवशोषित करते हैं और इसे फोटोवोल्टिक प्रभाव के माध्यम से सीधे करंट (DC) बिजली में परिवर्तित करते हैं। फिर एक इन्वर्टर इस DC को घरों में उपयोग के लिए अल्टरनेटिंग करंट (AC) में बदल देता है।"
+    },
+    benefits_of_solar_energy: {
+        keywords: ["benefits of solar energy", "solar ke fayde", "solar energy ke kya fayde hain", "benfits of solr enegy", "benifits of solor enrgy", "benefitz of soar enery", "solar advantage kya hai", "soler advntages batao", "solar adwantage explain", "advantage of sola energy", "advntg of solr power", "benefits", "fayde"],
+        answer_en: "The main benefits are reduced electricity bills, a lower carbon footprint, energy independence, and increased property value.",
+        answer_hi: "मुख्य लाभों में कम बिजली बिल, कम कार्बन फुटप्रिंट, ऊर्जा आत्मनिर्भरता और संपत्ति के मूल्य में वृद्धि शामिल है।"
+    },
+    disadvantages_of_solar_energy: {
+        keywords: ["disadvantages of solar energy", "solar ke nuksaan", "solar energy ke kya nuksaan hain", "disadvantges of solr enegy", "disadvanages of solor enrgy", "disadvntgs of soar enery", "solar disadvantage kya hai", "disadwntg of solr enrg", "solar drawbck list", "disadvantages", "nuksaan"],
+        answer_en: "The disadvantages include high initial cost, dependence on weather conditions, and the need for a large space for installation.",
+        answer_hi: "नुकसान में उच्च प्रारंभिक लागत, मौसम की स्थिति पर निर्भरता और स्थापना के लिए बड़ी जगह की आवश्यकता शामिल है।"
+    },
+    difference_solar_power_energy: {
+        keywords: ["difference between solar power and solar energy", "difrnce betwen solr pwer and solor enegy", "diference btwin soar power n enrgy", "diff betwen sollar powr n enery"],
+        answer_en: "Solar energy refers to the radiant light and heat from the sun. Solar power refers to the conversion of this energy into electricity.",
+        answer_hi: "सौर ऊर्जा सूर्य से निकलने वाली प्रकाश और गर्मी को संदर्भित करती है। सौर ऊर्जा इस ऊर्जा को बिजली में बदलने को संदर्भित करती है।"
+    },
+    what_is_a_solar_cell: {
+        keywords: ["what is a solar cell", "solar cell kya hai", "solr cel", "solor sel", "soar sell", "solar cell working", "solr cel working", "solar cel working", "solar cell", "cell"],
+        answer_en: "A solar cell is the smallest unit of a solar panel that converts sunlight directly into electricity. Solar panels are made of many solar cells.",
+        answer_hi: "सौर सेल एक सोलर पैनल की सबसे छोटी इकाई है जो सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करती है। सोलर पैनल कई सौर सेलों से बने होते हैं।"
+    },
+    what_is_photovoltaic_energy: {
+        keywords: ["what is photovoltaic energy", "photovoltaic urja", "wat is fotovoltaic enrgy", "wht is photovoltic enegy", "whatt is photo voltaik enery", "pv cell kya h", "pv vs thermal solr", "full form of pv in solar", "photovoltaic"],
+        answer_en: "Photovoltaic (PV) energy is the process of converting sunlight directly into electricity using solar panels. The 'PV' in PV cell stands for Photovoltaic.",
+        answer_hi: "फोटोवोल्टिक (PV) ऊर्जा सोलर पैनलों का उपयोग करके सूर्य के प्रकाश को सीधे बिजली में परिवर्तित करने की प्रक्रिया है। PV सेल में 'PV' का अर्थ फोटोवोल्टिक है।"
+    },
+    who_invented_solar_panels: {
+        keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal", "who invented solar cell", "invented", "inventor"],
+        answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+        answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+    },
+    can_solar_energy_run_a_house: {
+        keywords: ["can solar energy run a house", "solar se ghar chalta hai", "cn solr enegy rn house", "can solor enrg run hous", "cann soar enrgy rn haus", "home solr system price", "run house", "ghar chala"],
+        answer_en: "Yes, a well-sized solar system can power an entire house. The system size depends on your electricity usage.",
+        answer_hi: "हाँ, एक अच्छी तरह से आकार का सौर ऊर्जा सिस्टम पूरे घर को बिजली दे सकता है। सिस्टम का आकार आपकी बिजली की खपत पर निर्भर करता है।"
+    },
+    can_solar_energy_work_at_night: {
+        keywords: ["can solar energy work at night", "raat me solar kaam karta hai", "cn solr enegy wrk at nite", "can solor enrg wrk nigh", "cann soar enrgy wrks at nyt", "nighttime solar working", "does solr work at night", "how solr work at nght", "night", "raat"],
+        answer_en: "No, solar panels do not generate electricity at night. However, if you have a battery backup system, you can use the stored power.",
+        answer_hi: "नहीं, सोलर पैनल रात में बिजली पैदा नहीं करते हैं। हालाँकि, यदि आपके पास बैटरी बैकअप सिस्टम है, तो आप संग्रहीत बिजली का उपयोग कर सकते हैं।"
+    },
+    // 3. Solar Panels
+    what_are_solar_panels: {
+        keywords: ["what are solar panels", "solar panel kya hote hain", "solar panels kya hai", "wat are solr panals", "wht r solor penels", "whatt are soar panal", "panels", "panel", "panals"],
+        answer_en: "Solar panels are devices that convert sunlight into electricity. They are made of multiple solar cells connected together.",
+        answer_hi: "सोलर पैनल ऐसे उपकरण हैं जो सूर्य के प्रकाश को बिजली में बदलते हैं। वे एक साथ जुड़े हुए कई सोलर सेल से बने होते हैं।"
+    },
+    types_of_solar_panels: {
+        keywords: ["types of solar panels", "solar panel ke prakar", "mono", "poly", "thin-film", "typs of solr panals", "type of solor penels", "typpes of sollar panal", "kind of solar panel", "all types of solar panel", "types"],
+        answer_en: "The most common types are Monocrystalline (Mono-PERC), Polycrystalline, and Thin-film. Monocrystalline are generally the most efficient for homes.",
+        answer_hi: "सबसे सामान्य प्रकार मोनोक्रिस्टलाइन (Mono-PERC), पॉलीक्रिस्टलाइन और थिन-फिल्म हैं। मोनोक्रिस्टलाइन आमतौर पर घरों के लिए सबसे कुशल होते हैं।"
+    },
+    best_panel_for_home: {
+        keywords: ["which solar panel is best for home", "ghar ke liye sabse accha solar panel", "wich solr panal is bst fr home", "whch solor penel best 4 hom", "wich sollar panals bst house", "which solr panel best", "best panel", "best for home"],
+        answer_en: "Monocrystalline panels are often considered the best for homes due to their high efficiency and compact size.",
+        answer_hi: "मोनोक्रिस्टलाइन पैनलों को उनकी उच्च दक्षता और कॉम्पैक्ट आकार के कारण अक्सर घरों के लिए सबसे अच्छा माना जाता है।"
+    },
+    efficiency_of_solar_panels: {
+        keywords: ["efficiency of solar panels", "solar panel kitna efficient hai", "effciency of solr panals", "eficiency of solor penels", "effishency of soar panal", "panel efficiency", "efficiency"],
+        answer_en: "Modern solar panels typically have an efficiency of 17-22%. Higher efficiency means more power generation from the same amount of sunlight.",
+        answer_hi: "आधुनिक सोलर पैनलों की दक्षता आमतौर पर 17-22% होती है। उच्च दक्षता का मतलब है कि सूरज की रोशनी की समान मात्रा से अधिक बिजली उत्पादन।"
+    },
+    lifespan_of_solar_panels: {
+        keywords: ["life span of solar panels", "solar panel kitne saal chalta hai", "lyf span of solr panals", "life spam of solor penels", "lifespan of soar panal", "lifespan of solar panel", "durability of solr panl", "lifespan", "life span"],
+        answer_en: "Quality solar panels can last for 25 years or more, and they continue to generate power throughout their lifespan.",
+        answer_hi: "अच्छे सोलर पैनल 25 साल या उससे ज़्यादा चल सकते हैं, और वे इस दौरान बिजली पैदा करते रहते हैं।"
+    },
+    cost_of_solar_panels_india: {
+        keywords: ["cost of solar panels in india", "india me solar panel ka kharcha", "cost of solr panals in indya", "cst of solor penel india", "cozt of soar panal in inda", "actual cost of solar setup", "approx solr panel price", "rate of solar panel", "cost", "kharcha", "price", "daam", "rate", "total cost", "total kharcha", "solar panel me kharch kitna aayega"],
+        answer_en: "The cost in India is approximately ₹50,000 to ₹70,000 per kilowatt, but this can vary by state and brand. Our calculator can give you a better estimate.",
+        answer_hi: "भारत में लागत प्रति किलोवाट लगभग ₹50,000 से ₹70,000 है, लेकिन यह राज्य और ब्रांड के अनुसार भिन्न हो सकती है। हमारा कैलकुलेटर आपको एक बेहतर अनुमान दे सकता है।"
+    },
+    how_many_panels_for_house: {
+        keywords: ["how many solar panels do I need for my house", "ghar ke liye kitne panel chahiye", "hw many solr panals I ned for hous", "how meny solor penel do i nid home", "howmny soar panals fr haus"],
+        answer_en: "The number of panels depends on your electricity usage and the available roof area. Our calculator can help you find the right system size for your needs.",
+        answer_hi: "पैनलों की संख्या आपकी बिजली की खपत और उपलब्ध छत के क्षेत्रफल पर निर्भर करती है। हमारा कैलकुलेटर आपकी ज़रूरतों के लिए सही सिस्टम का आकार खोजने में आपकी मदद कर सकता है।"
+    },
+    
+    how_to_install_solar_panels: {
+        keywords: ["how to install solar panels", "installation process", "solar panel kaise lagayein", "hw to instal solr panals", "how to instol solor penels", "hou to instll soar panal", "install solar panel cost", "install", "installation"],
+        answer_en: "Installation involves mounting the panels on your roof, connecting them to an inverter, and integrating the system with your home's electrical grid. It's best to hire a certified professional for this.",
+        answer_hi: "इंस्टॉलेशन में पैनलों को आपकी छत पर लगाना, उन्हें इन्वर्टर से जोड़ना, और सिस्टम को आपके घर की बिजली ग्रिड के साथ एकीकृत करना शामिल है। इसके लिए किसी प्रमाणित पेशेवर को किराए पर लेना सबसे अच्छा है।"
+    },
+    space_required_for_solar_panels: {
+        keywords: ["space required for solar panels", "kitni jagah chahiye solar panel ke liye", "spce requrd fr solr panals", "space requir for solor penel", "spase req fr soar panal", "location reqrmnt solar", "space", "jagah"],
+        answer_en: "A 1 kW solar system generally requires about 100 sq ft of shadow-free roof area. The space needed depends on the system size.",
+        answer_hi: "1 किलोवाट सौर प्रणाली के लिए आमतौर पर लगभग 100 वर्ग फुट छाया-मुक्त छत क्षेत्र की आवश्यकता होती है। आवश्यक स्थान सिस्टम के आकार पर निर्भर करता है।"
+    },
+    rooftop_installation_process: {
+        keywords: ["rooftop solar installation process", "rooftop solr instalation proces", "rooftp solor instol procss", "roftop soar instll process", "rooftop"],
+        answer_en: "The rooftop installation process includes site assessment, system design, structural analysis, mounting panel frames, and electrical wiring.",
+        answer_hi: "रूफटॉप इंस्टॉलेशन प्रक्रिया में साइट का आकलन, सिस्टम डिज़ाइन, संरचनात्मक विश्लेषण, पैनल फ्रेम लगाना और इलेक्ट्रिकल वायरिंग शामिल है।"
+    },
+    on_grid_vs_off_grid: {
+        keywords: ["on-grid vs off-grid", "on-grid", "off-grid", "hybrid system", "ongrid vs ofgrid solr systm", "on grid vs of grd solor system", "ongrid vs ofgrid soar systm", "grid connected solr systm", "grid tied solar inverter", "grid off solr systm", "on grid", "off grid"],
+        answer_en: "On-grid systems are connected to the public power grid. Off-grid systems are independent and use batteries. Hybrid systems combine both for maximum reliability.",
+        answer_hi: "ऑन-ग्रिड सिस्टम सार्वजनिक पावर ग्रिड से जुड़े होते हैं। ऑफ-ग्रिड सिस्टम स्वतंत्र होते हैं और बैटरी का उपयोग करते हैं। हाइब्रिड सिस्टम अधिकतम विश्वसनीयता के लिए दोनों को जोड़ते हैं।"
+    },
+    cost_of_system_size: {
+        keywords: ["cost of installing a 1kw, 3kw, 5kw system", "1kw ka kharcha", "3kw ka kharcha", "5kw ka kharcha", "cst of instalng 1kw solr systm", "cost of instoll 1kw solor sys", "cozt installng 1 kw soar systm", "actual cost of solar setup", "one kw solr unit price", "kwp in solr system", "kw solar cost india", "unit prce solr system", "1kw", "3kw", "5kw"],
+        answer_en: "The cost per kilowatt is between ₹50,000 to ₹70,000. So, a 1kW system costs around ₹50-70k, a 3kW system around ₹1.5-2.1 lakh, and a 5kW system around ₹2.5-3.5 lakh.",
+        answer_hi: "प्रति किलोवाट लागत ₹50,000 से ₹70,000 के बीच है। इसलिए, 1kW सिस्टम की लागत लगभग ₹50-70k, 3kW सिस्टम की लगभग ₹1.5-2.1 लाख, और 5kW सिस्टम की लगभग ₹2.5-3.5 लाख होती है।"
+    },
+    government_subsidy: {
+        keywords: ["government subsidy for solar installation", "sarkari subsidy", "solar subsidy india", "govrment subsdy fr solr instaltion", "goverment subcidy solor instol", "govmnt subsedy fr soar instll", "any govt scheme for solr", "free solar scheme govt", "subsidy", "sarkari scheme"],
+        answer_en: "Yes, the Indian government offers subsidies under the 'PM Surya Ghar Muft Bijli Yojana'. Our calculator can help you estimate your subsidy amount.",
+        answer_hi: "हाँ, भारत सरकार 'पीएम सूर्य घर मुफ्त बिजली योजना' के तहत सब्सिडी प्रदान करती है। हमारा कैलकुलेटर आपकी सब्सिडी राशि का अनुमान लगाने में आपकी मदद कर सकता है।"
+    },
+    how_to_clean_solar_panels: {
+        keywords: ["how to clean solar panels", "solar panel kaise saaf karein", "hw to clen solr panals", "how to cln solor penels", "hou to klean soar panal", "how to clean solr panel", "clean solar panel", "clean", "saaf"],
+        answer_en: "Solar panels should be cleaned regularly to remove dust and dirt. You can use a soft brush and water, but avoid harsh chemicals.",
+        answer_hi: "धूल और गंदगी हटाने के लिए सोलर पैनलों को नियमित रूप से साफ करना चाहिए। आप एक नरम ब्रश और पानी का उपयोग कर सकते हैं, लेकिन कठोर रसायनों से बचें।"
+    },
+    do_solar_panels_work_on_cloudy_days: {
+        keywords: ["do solar panels work on cloudy days", "badal me solar kaam karta hai", "do solr panals wrk on clody days", "du solor penel work on clowdy dayz", "do soar panal wrks in cludy day", "is solr effctv in cloudy", "overcast day solar work", "cloudy", "badal"],
+        answer_en: "Yes, solar panels still work on cloudy days, but their output is reduced. They can typically generate 10-25% of their normal output.",
+        answer_hi: "हाँ, सोलर पैनल बादलों वाले दिनों में भी काम करते हैं, लेकिन उनका उत्पादन कम हो जाता है। वे आमतौर पर अपने सामान्य उत्पादन का 10-25% उत्पन्न कर सकते हैं。"
+    },
+    common_problems_in_solar_panels: {
+        keywords: ["common problems in solar panels", "solar panel ki samasyayein", "common problms in solr panals", "comon prblms in solor penels", "comn problm soar panal", "problems", "samasyayein"],
+        answer_en: "Common problems include dirt buildup, inverter issues, and physical damage. Regular maintenance can prevent most of these.",
+        answer_hi: "सामान्य समस्याओं में धूल का जमाव, इन्वर्टर की समस्याएं और भौतिक क्षति शामिल हैं। नियमित रखरखाव इनमें से अधिकांश को रोक सकता है।"
+    },
+    maintenance_cost: {
+        keywords: ["maintenance cost of solar panels", "solar panel ka maintenance kharcha", "maintenence cost of solr panals", "maintanance cst of solor penels", "maintnce cozt soar panal", "maintenance of solar panel", "maintenance"],
+        answer_en: "Solar panels have very low maintenance costs, mainly for cleaning and occasional check-ups. A professional check-up might cost between ₹500 to ₹1500 per year.",
+        answer_hi: "सोलर पैनलों का रखरखाव खर्च बहुत कम होता है, मुख्य रूप से सफाई और कभी-कभी जांच के लिए। एक पेशेवर जांच में प्रति वर्ष ₹500 से ₹1500 के बीच खर्च आ सकता है।"
+    },
+   
+    what_is_a_solar_inverter: {
+        keywords: ["what is a solar inverter", "solar inverter kya hota hai", "wat is solr inverer", "wht is solor invertor", "whatt is soar invertr", "hybrid solar inverter", "battery solar inverter combo", "inverer", "inverter"],
+        answer_en: "A solar inverter is a device that converts the direct current (DC) electricity from solar panels into alternating current (AC) electricity that can be used by your home appliances.",
+        answer_hi: "एक सोलर इन्वर्टर एक ऐसा उपकरण है जो सोलर पैनलों से आने वाली डायरेक्ट करंट (DC) बिजली को अल्टरनेटिंग करंट (AC) बिजली में परिवर्तित करता है जिसका उपयोग आपके घर के उपकरण कर सकते हैं।"
+    },
+    types_of_solar_inverters: {
+        keywords: ["types of solar inverters", "solar inverter ke prakar", "typs of solr inverer", "type of solor invertor", "typpes of soar invertr", "inverter types"],
+        answer_en: "Main types include string inverters, micro-inverters, and hybrid inverters. The choice depends on your system size and needs.",
+        answer_hi: "मुख्य प्रकारों में स्ट्रिंग इन्वर्टर, माइक्रो-इन्वर्टर और हाइब्रिड इन्वर्टर शामिल हैं। चुनाव आपके सिस्टम के आकार और जरूरतों पर निर्भर करता है।"
+    },
+    what_is_a_solar_battery: {
+        keywords: ["what is a solar battery", "solar battery kya hai", "wat is solr battry", "wht is solor batery", "whatt is soar battary", "solar btry storage capacity", "bttrey health solr system", "battry", "batery", "battery"],
+        answer_en: "A solar battery is a device that stores excess electricity generated by your solar panels for later use, especially at night or during power outages.",
+        answer_hi: "एक सोलर बैटरी एक ऐसा उपकरण है जो आपके सोलर पैनलों द्वारा उत्पन्न अतिरिक्त बिजली को बाद में उपयोग के लिए संग्रहीत करता है, खासकर रात में या बिजली गुल होने के दौरान।"
+    },
+    types_of_solar_batteries: {
+        keywords: ["types of solar batteries", "solar battery ke prakar", "typs of solr battry", "type of solor batteris", "typpes of soar batries", "battery types"],
+        answer_en: "Solar batteries are typically either lead-acid or lithium-ion. Lithium-ion batteries are more expensive but have a longer lifespan and better performance.",
+        answer_hi: "सोलर बैटरी आमतौर पर लेड-एसिड या लिथियम-आयन होती हैं। लिथियम-आयन बैटरी अधिक महंगी होती हैं लेकिन उनकी उम्र लंबी होती है और प्रदर्शन बेहतर होता है।"
+    },
+    how_long_do_solar_batteries_last: {
+        keywords: ["how long do solar batteries last", "solar battery kitne saal chalti hai", "hw long solr battry lst", "how lng solor batery last", "hou long soar battary lasts", "life of solr battery", "battery life"],
+        answer_en: "Solar batteries typically last for 5 to 15 years, depending on the type and usage. Lithium-ion batteries have a longer lifespan than lead-acid batteries.",
+        answer_hi: "सोलर बैटरी आमतौर पर 5 से 15 साल तक चलती हैं, जो उनके प्रकार और उपयोग पर निर्भर करता है। लिथियम-आयन बैटरी की उम्र लेड-एसिड बैटरी की तुलना में लंबी होती है।"
+    },
+   
+    how_much_money_can_i_save: {
+        keywords: ["how much money can i save with solar", "solar se kitna paisa bacha sakta hu", "kitni bachat", "hw much mony cn i sav with solr", "howmch money can i save wid solor", "hou much muny cn i sav wid soar", "how solar save electricty", "save money", "savings", "bachat"],
+        answer_en: "The savings depend on your electricity consumption and the size of your solar system. Our calculator can give you an estimate of your monthly savings.",
+        answer_hi: "बचत आपकी बिजली की खपत और आपके सौर ऊर्जा सिस्टम के आकार पर निर्भर करती है। हमारा कैलकुलेटर आपको आपकी मासिक बचत का अनुमान दे सकता है।"
+    },
+    payback_period: {
+        keywords: ["payback period of solar system", "solar ka kharcha kitne saal me wapas aayega", "payback period", "paybak priod of solr systm", "payback perid of solor system", "paybak periud soar systm", "payback"],
+        answer_en: "The payback period is typically 4 to 6 years, but this can vary depending on the initial cost, your electricity tariff, and available subsidies.",
+        answer_hi: "रिकवरी अवधि आमतौर पर 4 से 6 साल होती है, लेकिन यह प्रारंभिक लागत, आपके बिजली टैरिफ और उपलब्ध सब्सिडी के आधार पर भिन्न हो सकती है।"
+    },
+    how_does_solar_help_environment: {
+        keywords: ["how does solar help the environment", "solar se paryavaran ko kaise fayda", "how duz solr help enviroment", "hw dos solor hlp enviornment", "hou does soar halp envirmnt", "environment effect solar", "envmt benifits of sola", "impct of solr on envmnt", "zero emission solar", "environment", "paryavaran"],
+        answer_en: "Solar energy reduces carbon emissions by using a clean, renewable energy source instead of fossil fuels. It helps combat climate change and air pollution.",
+        answer_hi: "सौर ऊर्जा जीवाश्म ईंधन के बजाय एक स्वच्छ, नवीकरणीय ऊर्जा स्रोत का उपयोग करके कार्बन उत्सर्जन को कम करती है। यह जलवायु परिवर्तन और वायु प्रदूषण से लड़ने में मदद करती है।"
+    },
+    
+    what_is_solar_cell_efficiency: {
+        keywords: ["what is solar cell efficiency", "solar cell efficiency kya hai", "effciency of solr panel", "effcncy improvmnt tips"],
+        answer_en: "Solar cell efficiency is the percentage of solar energy that a solar cell converts into usable electricity. Higher efficiency means better performance.",
+        answer_hi: "सौर सेल दक्षता वह प्रतिशत है जो एक सौर सेल सौर ऊर्जा को उपयोग योग्य बिजली में परिवर्तित करता है। उच्च दक्षता का मतलब बेहतर प्रदर्शन है।"
+    },
+    what_is_net_metering: {
+        keywords: ["what is net metering", "net metering kya hai", "wat is net metrng in solr", "wht is netmetering solor", "whatt is net mettrng in soar"],
+        answer_en: "Net metering is a billing mechanism that credits solar energy system owners for the electricity they add to the power grid. It allows you to use your solar power and get credit for the surplus you generate.",
+        answer_hi: "नेट मीटरिंग एक बिलिंग प्रणाली है जो सौर ऊर्जा प्रणाली के मालिकों को उनके द्वारा पावर ग्रिड में जोड़ी गई बिजली के लिए क्रेडिट देती है। यह आपको अपनी सौर ऊर्जा का उपयोग करने और आपके द्वारा उत्पन्न अतिरिक्त बिजली के लिए क्रेडिट प्राप्त करने की अनुमति देती है।"
+    },
+    what_factors_affect_efficiency: {
+        keywords: ["what factors affect solar panel efficiency", "kaun se factor efficiency ko affect karte hain", "wat factors afect solr panal effciency", "wht factrs afct solor penel eficiency", "whatt fctors efect soar panal effishency"],
+        answer_en: "Efficiency is affected by sunlight intensity, temperature, panel type, and dirt buildup. Cleaning panels regularly helps maintain efficiency.",
+        answer_hi: "दक्षता सूर्य के प्रकाश की तीव्रता, तापमान, पैनल के प्रकार और धूल के जमाव से प्रभावित होती है। पैनलों को नियमित रूप से साफ करने से दक्षता बनाए रखने में मदद मिलती है।"
+    },
+    
+    does_solar_work_in_rainy_season: {
+        keywords: ["does solar work in rainy season", "baarish me solar kaam karta hai", "do solr wrk in rany seson", "du solor work rainy sezn", "do soar wrks in rany sezon", "can solr work in rain", "rainy season", "baarish"],
+        answer_en: "Solar panels work during the rainy season, but their output is lower due to reduced sunlight. A battery backup is essential during this time.",
+        answer_hi: "सौर पैनल बरसात के मौसम में काम करते हैं, लेकिन कम धूप के कारण उनका उत्पादन कम होता है। इस दौरान बैटरी बैकअप आवश्यक है।"
+    },
+    best_location_for_panels: {
+        keywords: ["best location for solar panels", "solar panels lagane ki sabse acchi jagah", "bst locatn fr solr panals home", "best loction solor penel at hom", "besst locatn haus fr soar panal", "location"],
+        answer_en: "The best location is a south-facing rooftop with no shadows from trees or buildings throughout the day.",
+        answer_hi: "सबसे अच्छी जगह एक दक्षिण की ओर वाली छत है जिस पर पूरे दिन पेड़ों या इमारतों की छाया न पड़े।"
+    },
+   
+    can_solar_power_a_car: {
+        keywords: ["can solar power a car", "kya solar se car chala sakte hain", "cn solr pwer car", "can solor power a kar", "cann soar pwr a caar"],
+        answer_en: "Yes, electric cars can be charged using solar energy, either through solar panels on a charging station or at your home.",
+        answer_hi: "हाँ, इलेक्ट्रिक कारों को सौर ऊर्जा का उपयोग करके चार्ज किया जा सकता है, या तो चार्जिंग स्टेशन पर लगे सोलर पैनलों के माध्यम से या आपके घर पर।"
+    },
+    who_invented_solar_panels: {
+        keywords: ["who invented solar panels", "solar panel kisne banaya", "hu inventd solr panals", "who invnted solor penels", "whu invent sollar panal"],
+        answer_en: "The photovoltaic effect was discovered by Edmond Becquerel in 1839. The first practical solar cell was developed by Bell Labs in 1954.",
+        answer_hi: "फोटोवोल्टिक प्रभाव की खोज 1839 में एडमंड बेकरेल ने की थी। पहला व्यावहारिक सौर सेल 1954 में बेल लैब्स द्वारा विकसित किया गया था।"
+    },
+    can_i_run_ac_on_solar: {
+        keywords: ["can i run ac on solar", "kya solar se ac chala sakte hain", "cn i rn ac on solr", "can i run a/c on solor", "cann i run ac on soar", "run ac on solar"],
+        answer_en: "Yes, you can run an AC on solar, but it requires a large solar system with sufficient battery backup to handle the high power consumption.",
+        answer_hi: "हाँ, आप सौर ऊर्जा पर एसी चला सकते हैं, लेकिन इसके लिए उच्च बिजली की खपत को संभालने के लिए पर्याप्त बैटरी बैकअप के साथ एक बड़ी सौर प्रणाली की आवश्यकता होती है।"
+    },
+
     }
 };
 
@@ -1056,14 +2616,13 @@ function changeLanguage(lang) {
         }
     });
 
-    // EMI chart labels update
+   
     if (chart) {
         chart.data.labels = [translations['emi_label_12'][currentLanguage], translations['emi_label_24'][currentLanguage], translations['emi_label_36'][currentLanguage]];
         chart.data.datasets[0].label = translations['monthly_payment_label'][currentLanguage];
         chart.update();
     }
 
-    // Pollution chart labels update
     if (pollutionChart) {
         pollutionChart.data.labels = [translations['pollution_remaining'][currentLanguage], translations['pollution_reduced'][currentLanguage]];
         pollutionChart.data.datasets[0].label = translations['aqi_label'][currentLanguage];
