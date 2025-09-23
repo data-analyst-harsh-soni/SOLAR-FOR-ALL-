@@ -141,17 +141,35 @@ async function calculate() {
     showMessage(translations['calculating_solar'][currentLanguage]);
     const bill = parseFloat(document.getElementById("bill").value);
     const tariff = parseFloat(document.getElementById("tariff").value);
-    const costPerKw = parseFloat(document.getElementById("cost").value);
-    if (isNaN(bill) || isNaN(tariff) || isNaN(costPerKw) || bill <= 0 || tariff <= 0 || costPerKw <= 0) {
+    
+    // Check for invalid inputs, but remove costPerKw from this check
+    if (isNaN(bill) || isNaN(tariff) || bill <= 0 || tariff <= 0) {
         showMessage(translations['invalid_input'][currentLanguage], "error");
         return;
     }
+
+    // --- New/Modified code block starts here ---
+    const panelType = document.getElementById("panelTypeSelect").value;
+    let costPerKw;
+
+    if (panelType === 'MONO') {
+        costPerKw = 65000;
+    } else if (panelType === 'POLY') {
+        costPerKw = 55000; // Using 55000 as a different value for demonstration. You can change this to 65000 if you want.
+    } else {
+        // Fallback in case no panel type is selected or a new type is added
+        costPerKw = 60000; 
+    }
+
+    // You can now remove the old costPerKw input field logic
+    // const costPerKw = parseFloat(document.getElementById("cost").value); // This line is no longer needed
+    // --- New/Modified code block ends here ---
+    
     const budget = parseFloat(document.getElementById("budget").value) || Infinity;
     const roofArea = parseFloat(document.getElementById("roofArea").value) || Infinity;
     const monthlyIncome = parseFloat(document.getElementById("monthlyIncome").value) || 0;
     const state = document.getElementById("stateSelect").value;
     const bank = document.getElementById("bankSelect").value;
-    const panelType = document.getElementById("panelTypeSelect").value;
 
     const locationData = await getLocation();
     if (!locationData) {
@@ -199,7 +217,6 @@ async function calculate() {
     displayAqiResults(aqiData);
     changeLanguage(currentLanguage);
 }
-
 const scripts = {
     en: (data) => `Hello! Based on your bill of ₹${data.bill}, you'll need an approximate ${data.requiredKw} kilowatt solar system. The estimated cost will be ₹${data.installCost}. You'll save around ₹${data.monthlySavings} per month, and the payback period is ${data.payback} years. This is equivalent to saving ${data.co2} tons of carbon dioxide, which is like planting ${data.trees} trees.`,
     hi: (data) => {
@@ -2643,5 +2660,6 @@ function changeLanguage(lang) {
         generateAI();
     }
 }
+
 
 
