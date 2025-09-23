@@ -17,7 +17,7 @@
     <div id="login-container" class="login-container">
         <div class="login-box">
             <div class="login-logo-section">
-                <img src="logo2.png" alt="Logo" class="login-main-logo">
+                <img src="image/logo2.png" alt="Logo" class="login-main-logo">
                 <h1 class="login-main-text" data-lang-key="app_title">SOLAR FOR ALL</h1>
             </div>
             <p data-lang-key="login_welcome">Welcome! Please log in to continue.</p>
@@ -149,7 +149,10 @@
                             </div>
                             <div class="row">
                                 <div><label data-lang-key="calc_roof_label">Roof Area (sq ft)</label><input id="roofArea" type="number" data-lang-key="roof_placeholder" placeholder="Auto-filled from map" readonly /></div>
-                                <div><label data-lang-key="calc_lang_label">Language</label><select id="langSelect"><option value="hi">हिन्दी</option><option value="en">English</option></select></div>
+                                <div>
+                                    <label for="annualUnits" data-lang-key="calc_units_label_annual">Annual Units</label>
+                                    <input type="number" id="annualUnits" placeholder="e.g., 1800" value="" min="0">
+                                </div>
                             </div>
                             <hr class="divider">
                             <div class="govt-schemes-section">
