@@ -12,8 +12,12 @@ const AQI_TOKEN = "344eccebdba6c88cebea99bdd4aeac5f440e0a9b";
 const NASA_TOKEN = "i4Vjou3u6oUk3dmcGGDixhSIviXGPDB6pR7gTY0H";
 
 
+// ===== API FUNCTIONS =====
 async function getAQI(lat, lon) {
-    const url = `https://api.waqi.info/feed/geo:${lat};${lon}/?token=${AQI_TOKEN}`;
+    const jabalpurLat = 23.1654;
+    const jabalpurLon = 79.9329;
+    
+    const url = `https://api.waqi.info/feed/geo:${jabalpurLat};${jabalpurLon}/?token=${AQI_TOKEN}`;
     try {
         const res = await fetch(url);
         if (!res.ok) throw new Error(`AQI Error: ${res.status}`);
@@ -468,7 +472,10 @@ function displayAqiResults(aqiData) {
     if (aqiData.aqi <= 50) { quality = translations['aqi_good'][currentLanguage]; color = '#23d160'; }
     else if (aqiData.aqi <= 100) { quality = translations['aqi_moderate'][currentLanguage]; color = '#ff9d00'; }
     else { quality = translations['aqi_unhealthy'][currentLanguage]; color = '#ff3860'; }
-    aqiEl.innerHTML = `<p style="margin-bottom: 0.5rem;"><strong>${translations['aqi_city'][currentLanguage]}:</strong> ${aqiData.city.split(',')[0]}</p><h3 style="font-size: 2.5rem; color: ${color}; margin: 0.5rem 0;">${aqiData.aqi}</h3><p style="color: ${color};"><strong>${quality}</strong></p>`;
+    
+    
+    aqiEl.innerHTML = `<p style="margin-bottom: 0.5rem;"><strong>${translations['aqi_city'][currentLanguage]}:</strong> Jabalpur</p><h3 style="font-size: 2.5rem; color: ${color}; margin: 0.5rem 0;">${aqiData.aqi}</h3><p style="color: ${color};"><strong>${quality}</strong></p>`;
+    
     aqiContainer.style.display = 'block';
 }
 
@@ -2636,4 +2643,5 @@ function changeLanguage(lang) {
         generateAI();
     }
 }
+
 
