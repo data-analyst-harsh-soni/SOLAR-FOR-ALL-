@@ -1121,7 +1121,7 @@ function renderSolarPanels() {
             model: 'WSM-545',
             wattage: '545W Mono-PERC',
             price: '₹22,000 - ₹25,000',
-            link: 'https://www.waaree.com/solar-panels/',
+            link: 'https://shop.waaree.com/',
             description: {
                 en: 'One of India\'s largest solar panel manufacturers, known for high-efficiency modules suitable for Indian climates.',
                 hi: 'भारत की सबसे बड़ी सोलर पैनल निर्माता कंपनी में से एक, जो भारतीय जलवायु के लिए उच्च-दक्षता वाले मॉड्यूल के लिए जानी जाती है।'
@@ -1132,7 +1132,7 @@ function renderSolarPanels() {
             model: 'Alpha Series',
             wattage: '535W-550W',
             price: '₹23,000 - ₹26,000',
-            link: 'https://www.adani.com/business/solar-manufacturing/solar-panels',
+            link: 'https://www.adanisolar.com/',
             description: {
                 en: 'A leader in the Indian solar industry with advanced technology and robust panel construction.',
                 hi: 'भारतीय सौर उद्योग में एक प्रमुख खिलाड़ी, जो अपनी उन्नत तकनीक और मजबूत पैनल निर्माण के लिए प्रसिद्ध है।'
@@ -1143,7 +1143,7 @@ function renderSolarPanels() {
             model: 'Mono PERC',
             wattage: '400W-550W',
             price: '₹20,000 - ₹24,000',
-            link: 'https://www.tatapowersolar.com/solar-modules',
+            link: 'https://www.tatapower.com/solaroof-enquiry?utm_source=Google_Search&utm_medium=Paid&utm_campaign=TataPower_Brand_Central_Phrase-23044665828&gad_source=1&gad_campaignid=23044665828&gbraid=0AAAAAoySBgxljkZRIhqT_VuqpHftmnH50&gclid=Cj0KCQjw0NPGBhCDARIsAGAzpp2nF12rQMs1BtJ3nEODtjpKO98GuIxyfF35x68ffXwddF1-_isQ7RgaAvPYEALw_wcB',
             description: {
                 en: 'A trusted name in India, offering reliable and high-performance solar solutions.',
                 hi: 'भारत में एक विश्वसनीय नाम, जो टिकाऊ और उच्च-प्रदर्शन वाले सौर समाधान प्रदान करता है।'
@@ -1154,7 +1154,7 @@ function renderSolarPanels() {
             model: 'Somera Series',
             wattage: '540W-560W',
             price: '₹22,500 - ₹25,500',
-            link: 'https://www.vikramsolar.com/products/solar-panels/',
+            link: 'https://www.solarsquare.in/rooftop-solar-in-jabalpur?utm_campaign=Y2G_PMax_Jabalpur_19Aug2024&utm_source=adwords&utm_medium=ppc&gad_source=1&gad_campaignid=21605395603&gbraid=0AAAAACamwb9LjAyugjcYRSpHG17--Gv5l&gclid=Cj0KCQjw0NPGBhCDARIsAGAzpp0U_xtIk5hmKq_K65UtSYYwPIZr0lnSxdPeihMNp1gytvTVJmtwMucaArhXEALw_wcB',
             description: {
                 en: 'A globally recognized company with a strong presence in India, providing durable and efficient panels.',
                 hi: 'एक विश्व स्तर पर मान्यता प्राप्त कंपनी, जिसकी भारत में मजबूत उपस्थिति है और जो कुशल और मजबूत पैनल प्रदान करती है।'
@@ -1165,7 +1165,7 @@ function renderSolarPanels() {
             model: 'Shark Bi-facial',
             wattage: '550W',
             price: '₹23,000 - ₹27,000',
-            link: 'https://loomsolar.com/collections/solar-panels',
+            link: 'https://www.loomsolar.com/?srsltid=AfmBOopjw9tJqten8-ET8XYxsAExPCA404ZSR82CcYRYXw3Rj995b390',
             description: {
                 en: 'Popular in the residential market for their innovative and high-efficiency bi-facial solar panels.',
                 hi: 'आवासीय बाजार में अपने अभिनव और उच्च-दक्षता वाले द्विफलक (bi-facial) सौर पैनलों के लिए लोकप्रिय है।'
@@ -1176,7 +1176,7 @@ function renderSolarPanels() {
             model: 'Deserv',
             wattage: '540W Mono-PERC',
             price: '₹21,500 - ₹24,500',
-            link: 'https://www.renewsys.com/products',
+            link: 'https://www.renewsysworld.com/',
             description: {
                 en: 'Manufactures solar panels and other components, known for their high-quality and sustainable products.',
                 hi: 'सोलर पैनल और अन्य घटकों का निर्माण करती है, जो अपने उच्च-गुणवत्ता और टिकाऊ उत्पादों के लिए जानी जाती है।'
@@ -1187,7 +1187,7 @@ function renderSolarPanels() {
             model: 'Mono-PERC',
             wattage: '545W',
             price: '₹21,000 - ₹24,000',
-            link: 'https://premierenergies.com/solar-panels/',
+            link: 'https://www.premierenergies.com/',
             description: {
                 en: 'One of the top solar panel producers in India, focusing on both residential and commercial projects.',
                 hi: 'भारत में शीर्ष सौर पैनल उत्पादकों में से एक, जो आवासीय और वाणिज्यिक दोनों परियोजनाओं पर ध्यान केंद्रित करता है।'
@@ -1198,7 +1198,7 @@ function renderSolarPanels() {
             model: 'Helios',
             wattage: '540W',
             price: '₹22,000 - ₹25,000',
-            link: 'https://goldisolar.com/product/solar-panels',
+            link: 'https://goldisolar.com/',
             description: {
                 en: 'Known for producing a wide range of solar PV modules with advanced technology and high-quality materials.',
                 hi: 'उन्नत तकनीक और उच्च-गुणवत्ता वाली सामग्री के साथ सौर पीवी मॉड्यूल की एक विस्तृत श्रृंखला के उत्पादन के लिए जाना जाता है।'
@@ -1209,7 +1209,7 @@ function renderSolarPanels() {
             model: 'Mono-PERC',
             wattage: '540W',
             price: '₹20,500 - ₹23,500',
-            link: 'https://solexsolar.com/product/solar-pv-module/',
+            link: 'https://solex.in/',
             description: {
                 en: 'Offers high-quality solar panels and has a strong focus on innovative and reliable solar solutions.',
                 hi: 'उच्च-गुणवत्ता वाले सौर पैनल प्रदान करता है और अभिनव और विश्वसनीय सौर समाधानों पर एक मजबूत ध्यान केंद्रित करता है।'
@@ -1220,7 +1220,7 @@ function renderSolarPanels() {
             model: 'Microtek Polycrystalline',
             wattage: '335W',
             price: '₹15,000 - ₹18,000',
-            link: 'https://www.microtek.in/Solar-Product-Range/solar-panels/',
+            link: 'https://www.microtek.in/product/solar-solutions',
             description: {
                 en: 'A popular brand for polycrystalline panels, providing affordable and efficient solutions for Indian homes.',
                 hi: 'पॉलीक्रिस्टलाइन पैनलों के लिए एक लोकप्रिय ब्रांड, जो भारतीय घरों के लिए किफायती और कुशल समाधान प्रदान करता है।'
@@ -1231,7 +1231,7 @@ function renderSolarPanels() {
             model: 'Maxeon 6',
             wattage: '440W',
             price: '₹28,000 - ₹32,000',
-            link: 'https://us.sunpower.com/solar-panels',
+            link: 'https://us.sunpower.com/',
             description: {
                 en: 'A global leader in high-efficiency solar panels, offering premium performance and a long warranty.',
                 hi: 'उच्च-दक्षता वाले सौर पैनलों में एक वैश्विक लीडर, जो प्रीमियम प्रदर्शन और लंबी वारंटी प्रदान करता है।'
@@ -1242,7 +1242,7 @@ function renderSolarPanels() {
             model: 'Vertex S',
             wattage: '400W',
             price: '₹18,000 - ₹21,000',
-            link: 'https://www.trinasolar.com/en-global/products/panels',
+            link: 'https://www.trinasolar.com/us/product',
             description: {
                 en: 'A top-tier global manufacturer known for innovative and highly efficient solar panels.',
                 hi: 'एक टॉप-टियर वैश्विक निर्माता, जो अभिनव और अत्यधिक कुशल सौर पैनलों के लिए जाना जाता है।'
@@ -1253,7 +1253,7 @@ function renderSolarPanels() {
             model: 'Tiger Neo',
             wattage: '545W',
             price: '₹22,000 - ₹25,000',
-            link: 'https://www.jinkosolar.com/en/products/panel',
+            link: 'https://www.jinkosolar.com/en/site/tigerneo_3',
             description: {
                 en: 'One of the world\'s largest solar panel manufacturers, recognized for product quality and reliability.',
                 hi: 'दुनिया के सबसे बड़े सौर पैनल निर्माताओं में से एक, जो उत्पाद की गुणवत्ता और विश्वसनीयता के लिए मान्यता प्राप्त है।'
@@ -1264,7 +1264,7 @@ function renderSolarPanels() {
             model: 'HiKu7 Mono PERC',
             wattage: '665W',
             price: '₹25,000 - ₹29,000',
-            link: 'https://www.canadiansolar.com/na/products/solar-panels',
+            link: 'https://www.canadiansolar.com/',
             description: {
                 en: 'One of the world\'s leading solar energy companies, known for premium quality and performance.',
                 hi: 'दुनिया की अग्रणी सौर ऊर्जा कंपनियों में से एक, जो प्रीमियम गुणवत्ता और प्रदर्शन के लिए जानी जाती है।'
@@ -1275,7 +1275,7 @@ function renderSolarPanels() {
             model: 'Hi-MO 5M',
             wattage: '540W',
             price: '₹21,000 - ₹24,000',
-            link: 'https://www.longi.com/en/products/modules',
+            link: 'https://www.longi.com/in/',
             description: {
                 en: 'A global leader focused on producing high-efficiency monocrystalline solar panels.',
                 hi: 'उच्च-दक्षता वाले मोनोक्रिस्टलाइन सोलर पैनलों के उत्पादन पर ध्यान केंद्रित करने वाला एक वैश्विक लीडर।'
@@ -1300,4 +1300,5 @@ function renderSolarPanels() {
         panelListContainer.appendChild(panelCard);
     });
 }
+
 
