@@ -1025,3 +1025,73 @@ footer {
     color: #00c6ff;
     margin-top: 0;
 }
+/* --- Solar Panel Section Styles --- */
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.panel-card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.panel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.panel-card h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.panel-card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.panel-card .price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.panel-card .buy-link {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.panel-card .buy-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4);
+}
+
+.loading-placeholder {
+    color: var(--muted);
+    font-size: 1.2rem;
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 3rem;
+}
