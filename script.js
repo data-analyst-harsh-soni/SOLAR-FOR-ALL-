@@ -1,5 +1,5 @@
 // ===== GLOBAL VARIABLES & STATE =====
-const myVisualImages = ['image/gen1.jpg', 'image/gen2.jpg', 'image/gen3.jpg', 'image/gen4.jpg', 'image/gen5.jpg'];
+const myVisualImages = ['gen1.jpg', 'gen2.jpg', 'gen3.jpg', 'gen4.jpg', 'gen5.jpg'];
 const myAiVideos = ['explainer1.mp4', 'explainer2.mp4', 'explainer3.mp4', 'explainer4.mp4'];
 let map, communityMap, drawnItems, drawControl, chart, pollutionChart, lastCalc, communityData = [],
     locationDetected = false,
@@ -1300,3 +1300,4 @@ function renderSolarPanels() {
         panelListContainer.appendChild(panelCard);
     });
 }
+
